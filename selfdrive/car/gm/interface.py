@@ -67,9 +67,9 @@ class CarInterface(CarInterfaceBase):
 
     tire_stiffness_factor = 0.5
 
-    ret.minSteerSpeed = 11 * CV.KPH_TO_MS
-    ret.steerRateCost = 0.3625 # def : 2.0
-    ret.steerActuatorDelay = 0.1925  # def: 0.2 Default delay, not measured yet
+    ret.minSteerSpeed = 8 * CV.KPH_TO_MS
+    ret.steerRateCost = 0.5 # def : 2.0
+    ret.steerActuatorDelay = 0.  # def: 0.2 Default delay, not measured yet
 
     ret.minEnableSpeed = -1
     ret.mass = 1625. + STD_CARGO_KG
@@ -77,16 +77,11 @@ class CarInterface(CarInterfaceBase):
     ret.steerRatio = 16.8
     ret.steerRatioRear = 0.
     ret.centerToFront = ret.wheelbase * 0.49 # wild guess
-    ret.lateralTuning.init('lqr')
-
-    ret.lateralTuning.lqr.scale = 1975.0
-    ret.lateralTuning.lqr.ki = 0.032
-    ret.lateralTuning.lqr.a = [0., 1., -0.22619643, 1.21822268]
-    ret.lateralTuning.lqr.b = [-1.92006585e-04, 3.95603032e-05]
-    ret.lateralTuning.lqr.c = [1., 0.]
-    ret.lateralTuning.lqr.k = [-110.73572306, 451.22718255]
-    ret.lateralTuning.lqr.l =  [0.3233671, 0.3185757]
-    ret.lateralTuning.lqr.dcGain = 0.002237852961363602
+    ret.lateralTuning.pid.kpBP, ret.lateralTuning.pid.kiBP = [[10., 41.0], [10., 41.0]]
+    ret.lateralTuning.pid.kpV, ret.lateralTuning.pid.kiV = [[0.18, 0.255], [0.01, 0.02]]
+    ret.lateralTuning.pid.kdBP = [0.]
+    ret.lateralTuning.pid.kdV = [0.321]  #corolla from shane fork : 0.725
+    ret.lateralTuning.pid.kf = 0.0001
 
     # TODO: get actual value, for now starting with reasonable value for
     # civic and scaling by mass and wheelbase
@@ -100,23 +95,23 @@ class CarInterface(CarInterfaceBase):
     # longitudinal
     #ret.longitudinalTuning.kpBP = [0., 30.*CV.KPH_TO_MS, 60.*CV.KPH_TO_MS, 90.*CV.KPH_TO_MS]
     #ret.longitudinalTuning.kpV = [1.15, 1.1, 0.9, 0.43]
-    ret.longitudinalTuning.kpBP = [0., 10.*CV.KPH_TO_MS, 25.*CV.KPH_TO_MS, 40.*CV.KPH_TO_MS, 60.*CV.KPH_TO_MS, 80.*CV.KPH_TO_MS, 100.*CV.KPH_TO_MS, 110.*CV.KPH_TO_MS]
-    ret.longitudinalTuning.kpV = [1.25, 1.10, 0.81, 0.60, 0.57, 0.54, 0.51, 0.48]
+    ret.longitudinalTuning.kpBP = [0.0, 5.0, 10.0, 20.0, 35.0]
+    ret.longitudinalTuning.kpV = [0.6, 0.95, 1.19, 1.27, 1.18]
     
-    ret.longitudinalTuning.kiBP = [0., 130. * CV.KPH_TO_MS]
-    ret.longitudinalTuning.kiV = [0.075, 0.05]
+    ret.longitudinalTuning.kiBP = [0., 35.]
+    ret.longitudinalTuning.kiV = [0.31, 0.26]
     
     #ret.longitudinalTuning.kfBP = [15., 20., 25.]
     #ret.longitudinalTuning.kfV = [1., 0.5, 0.2]
     
     ret.longitudinalTuning.deadzoneBP = [0., 30.*CV.KPH_TO_MS]
-    ret.longitudinalTuning.deadzoneV = [0., 0.10]
+    ret.longitudinalTuning.deadzoneV = [0., 0.07]
     # ret.longitudinalActuatorDelay = 0.2
     ret.longitudinalActuatorDelayLowerBound = 0.10
     ret.longitudinalActuatorDelayUpperBound = 0.15
     
-    ret.startAccel = -0.8
-    ret.stopAccel = -0.5
+    ret.startAccel = -0.4
+    ret.stopAccel = -0.3
     ret.startingAccelRate = 1.0
     ret.stoppingDecelRate = 0.5
     ret.vEgoStopping = 0.6
