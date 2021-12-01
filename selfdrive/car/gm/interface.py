@@ -80,7 +80,7 @@ class CarInterface(CarInterfaceBase):
     ret.lateralTuning.pid.kpBP, ret.lateralTuning.pid.kiBP = [[10., 41.0], [10., 41.0]]
     ret.lateralTuning.pid.kpV, ret.lateralTuning.pid.kiV = [[0.18, 0.255], [0.01, 0.02]]
     ret.lateralTuning.pid.kdBP = [0.]
-    ret.lateralTuning.pid.kdV = [0.321]  #corolla from shane fork : 0.725
+    ret.lateralTuning.pid.kdV = [0.32]  #corolla from shane fork : 0.725
     ret.lateralTuning.pid.kf = 0.0001
 
     # TODO: get actual value, for now starting with reasonable value for
@@ -110,8 +110,8 @@ class CarInterface(CarInterfaceBase):
     ret.longitudinalActuatorDelayLowerBound = 0.10
     ret.longitudinalActuatorDelayUpperBound = 0.15
     
-    ret.startAccel = -0.4
-    ret.stopAccel = -0.3
+    ret.startAccel = -0.3
+    ret.stopAccel = -0.2
     ret.startingAccelRate = 1.0
     ret.stoppingDecelRate = 0.5
     ret.vEgoStopping = 0.6
