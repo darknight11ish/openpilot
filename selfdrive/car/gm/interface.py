@@ -79,8 +79,8 @@ class CarInterface(CarInterfaceBase):
     ret.centerToFront = ret.wheelbase * 0.49 # wild guess
     ret.lateralTuning.pid.kpBP, ret.lateralTuning.pid.kiBP = [[10., 41.0], [10., 41.0]]
     ret.lateralTuning.pid.kpV, ret.lateralTuning.pid.kiV = [[0.18, 0.255], [0.01, 0.02]]
-    ret.lateralTuning.pid.kdBP = [0., 41.0]
-    ret.lateralTuning.pid.kdV = [0.3, 0.324]  #corolla from shane fork : 0.725
+    ret.lateralTuning.pid.kdBP = [0.]
+    ret.lateralTuning.pid.kdV = [0.318]  #corolla from shane fork : 0.725
     ret.lateralTuning.pid.kf = 0.0001
 
     # TODO: get actual value, for now starting with reasonable value for
