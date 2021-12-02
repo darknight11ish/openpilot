@@ -77,7 +77,7 @@ class CarInterface(CarInterfaceBase):
     ret.steerRatio = 16.8
     ret.steerRatioRear = 0.
     ret.centerToFront = ret.wheelbase * 0.49 # wild guess
-    ret.lateralTuning.pid.kpBP, ret.lateralTuning.pid.kiBP = [[10., 41.0], [10., 41.0]]
+    ret.lateralTuning.pid.kpBP, ret.lateralTuning.pid.kiBP = [[10., 40.0], [10., 40.0]]
     ret.lateralTuning.pid.kpV, ret.lateralTuning.pid.kiV = [[0.18, 0.255], [0.01, 0.02]]
     ret.lateralTuning.pid.kdBP = [0.]
     ret.lateralTuning.pid.kdV = [0.318]  #corolla from shane fork : 0.725
@@ -105,13 +105,13 @@ class CarInterface(CarInterfaceBase):
     #ret.longitudinalTuning.kfV = [1., 0.5, 0.2]
     
     ret.longitudinalTuning.deadzoneBP = [0., 30.*CV.KPH_TO_MS]
-    ret.longitudinalTuning.deadzoneV = [0., 0.06]
+    ret.longitudinalTuning.deadzoneV = [0., 0.055]
     # ret.longitudinalActuatorDelay = 0.1
     ret.longitudinalActuatorDelayLowerBound = 0.1
     ret.longitudinalActuatorDelayUpperBound = 0.1
     
-    ret.startAccel = -0.3
-    ret.stopAccel = -0.2
+    ret.startAccel = -0.2
+    ret.stopAccel = -0.1
     ret.startingAccelRate = 1.0
     ret.stoppingDecelRate = 0.5
     ret.vEgoStopping = 0.6
