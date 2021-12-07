@@ -124,7 +124,6 @@ void Sidebar::paintEvent(QPaintEvent *event) {
 //  drawMetric(p, temp_status.first, temp_status.second, 338);
 //  drawMetric(p, panda_status.first,  panda_status.second, 518);
 //  drawMetric(p, connect_status.first, connect_status.second, 676);
-  QString batt_perc_qstring = QString("BATT: %1 %2").arg(batt_perc).arg("%");
   drawMetric(p, batt_perc_qstring +"\n"+ QString("%1°C").arg((double)temp_val,4,'f',1), temp_status.second, 338);
   drawMetric(p, panda_status.first,  panda_status.second, 518);
   drawMetric(p, "ONLINE" + connect_status.first, connect_status.second, 676);
