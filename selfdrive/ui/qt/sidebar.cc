@@ -71,11 +71,11 @@ void Sidebar::updateState(const UIState &s) {
   }
   setProperty("tempStatus", QVariant::fromValue(tempStatus));
 
-  ItemStatus pandaStatus = {"Good Panda", good_color};
+  ItemStatus pandaStatus = {"ONLINE", good_color};
   if (s.scene.pandaType == cereal::PandaState::PandaType::UNKNOWN) {
-    pandaStatus = {"NO PANDA", danger_color};
+    pandaStatus = {"OFFLINE", danger_color};
   } else if (s.scene.started && !sm["liveLocationKalman"].getLiveLocationKalman().getGpsOK()) {
-    pandaStatus = {"Bad GPS", warning_color};
+    pandaStatus = {"LOOKING", warning_color};
   }
   setProperty("pandaStatus", QVariant::fromValue(pandaStatus));
 
@@ -127,5 +127,5 @@ void Sidebar::paintEvent(QPaintEvent *event) {
   QString batt_perc_qstring = QString("BATT: %1 %2").arg(batt_perc).arg("%");
   drawMetric(p, batt_perc_qstring +"\n"+ QString("%1°C").arg((double)temp_val,4,'f',1), temp_status.second, 338);
   drawMetric(p, panda_status.first,  panda_status.second, 518);
-  drawMetric(p, "Network" + connect_status.first, connect_status.second, 676);
+  drawMetric(p, "ONLINE" + connect_status.first, connect_status.second, 676);
 }
