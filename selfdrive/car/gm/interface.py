@@ -80,7 +80,7 @@ class CarInterface(CarInterfaceBase):
     ret.lateralTuning.pid.kpBP, ret.lateralTuning.pid.kiBP = [[10., 41.0], [10., 41.0]]
     ret.lateralTuning.pid.kpV, ret.lateralTuning.pid.kiV = [[0.18, 0.26], [0.01, 0.02]]
     ret.lateralTuning.pid.kdBP = [0.]
-    ret.lateralTuning.pid.kdV = [0.318]  #this value seems ideal, very sensitive to changes greater than 0.001
+    ret.lateralTuning.pid.kdV = [0.317]  #this value seems ideal, very sensitive to changes greater than 0.001
     ret.lateralTuning.pid.kf = 0.0001
 
     # TODO: get actual value, for now starting with reasonable value for
@@ -104,11 +104,11 @@ class CarInterface(CarInterfaceBase):
     #ret.longitudinalTuning.kfBP = [15., 20., 25.]
     #ret.longitudinalTuning.kfV = [1., 0.5, 0.2]
     
-    ret.longitudinalTuning.deadzoneBP = [0., 30.*CV.KPH_TO_MS]
-    ret.longitudinalTuning.deadzoneV = [0., 0.048]
-    # ret.longitudinalActuatorDelay = 0.1
-    ret.longitudinalActuatorDelayLowerBound = 0.1
-    ret.longitudinalActuatorDelayUpperBound = 0.1
+    ret.longitudinalTuning.deadzoneBP = [0.]
+    ret.longitudinalTuning.deadzoneV = [0.]
+    # ret.longitudinalActuatorDelay = 0.1 will cause controls unavailable if replacing lower/upper bound
+    ret.longitudinalActuatorDelayLowerBound = 0.0
+    ret.longitudinalActuatorDelayUpperBound = 0.0
     
     ret.startAccel = -0.1
     ret.stopAccel = -0.05
