@@ -98,11 +98,11 @@ void TermsPage::showEvent(QShowEvent *event) {
   buttons->setSpacing(45);
   main_layout->addLayout(buttons);
 
-  QPushButton *decline_btn = new QPushButton("거절");
+  QPushButton *decline_btn = new QPushButton("Refuse");
   buttons->addWidget(decline_btn);
   QObject::connect(decline_btn, &QPushButton::clicked, this, &TermsPage::declinedTerms);
 
-  accept_btn = new QPushButton("스크롤하여 진행");
+  accept_btn = new QPushButton("Scroll to Accept");
   accept_btn->setEnabled(false);
   accept_btn->setStyleSheet(R"(
     QPushButton {
