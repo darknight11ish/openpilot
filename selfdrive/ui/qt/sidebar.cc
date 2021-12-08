@@ -71,11 +71,11 @@ void Sidebar::updateState(const UIState &s) {
   }
   setProperty("tempStatus", QVariant::fromValue(tempStatus));
 
-  ItemStatus pandaStatus = {"Online", good_color};
+  ItemStatus pandaStatus = {"Good Panda", good_color};
   if (s.scene.pandaType == cereal::PandaState::PandaType::UNKNOWN) {
-    pandaStatus = {"Offline", danger_color};
+    pandaStatus = {"NO PANDA", danger_color};
   } else if (s.scene.started && !sm["liveLocationKalman"].getLiveLocationKalman().getGpsOK()) {
-    pandaStatus = {"Looking", warning_color};
+    pandaStatus = {"Bad GPS", warning_color};
   }
   setProperty("pandaStatus", QVariant::fromValue(pandaStatus));
 
