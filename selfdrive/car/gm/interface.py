@@ -104,11 +104,11 @@ class CarInterface(CarInterfaceBase):
     #ret.longitudinalTuning.kfBP = [15., 20., 25.]
     #ret.longitudinalTuning.kfV = [1., 0.5, 0.2]
     
-    ret.longitudinalTuning.deadzoneBP = [0.]
-    ret.longitudinalTuning.deadzoneV = [0.]
-    # ret.longitudinalActuatorDelay = 0.1 will cause controls unavailable if replacing lower/upper bound
-    ret.longitudinalActuatorDelayLowerBound = 0.0
-    ret.longitudinalActuatorDelayUpperBound = 0.0
+    ret.longitudinalTuning.deadzoneBP = [0., 30.*CV.KPH_TO_MS]
+    ret.longitudinalTuning.deadzoneV = [0., 0.04]
+    # ret.longitudinalActuatorDelay = 0.1
+    ret.longitudinalActuatorDelayLowerBound = 0.05
+    ret.longitudinalActuatorDelayUpperBound = 0.05
     
     ret.startAccel = -0.1
     ret.stopAccel = -0.05
