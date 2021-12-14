@@ -56,7 +56,6 @@ class CarInterface(CarInterfaceBase):
     ret.pcmCruise = False  # stock cruise control is kept off
 
     # GM port is a community feature
-    # TODO: make a port that uses a car harness and it only intercepts the camera
     ret.communityFeature = True
 
     # Presence of a camera on the object bus is ok.
@@ -68,8 +67,8 @@ class CarInterface(CarInterfaceBase):
     tire_stiffness_factor = 0.5
 
     ret.minSteerSpeed = 8 * CV.KPH_TO_MS
-    ret.steerRateCost = 0.5 # def : 2.0
-    ret.steerActuatorDelay = 0.  # def: 0.2 Default delay, not measured yet
+    ret.steerRateCost = 0.5
+    ret.steerActuatorDelay = 0.
 
     ret.minEnableSpeed = -1
     ret.mass = 1625. + STD_CARGO_KG
@@ -79,8 +78,8 @@ class CarInterface(CarInterfaceBase):
     ret.centerToFront = ret.wheelbase * 0.49 # wild guess
     ret.lateralTuning.pid.kpBP, ret.lateralTuning.pid.kiBP = [[10., 41.0], [10., 41.0]]
     ret.lateralTuning.pid.kpV, ret.lateralTuning.pid.kiV = [[0.18, 0.26], [0.01, 0.02]]
-    ret.lateralTuning.pid.kdBP = [0.]
-    ret.lateralTuning.pid.kdV = [0.316]  #this value seems ideal, very sensitive to changes greater than 0.001
+    ret.lateralTuning.pid.kdBP = [10., 41.0]
+    ret.lateralTuning.pid.kdV = [0.315, 0.3184]  # very sensitive to changes greater than 0.001
     ret.lateralTuning.pid.kf = 0.0001
 
     # TODO: get actual value, for now starting with reasonable value for
@@ -93,29 +92,23 @@ class CarInterface(CarInterfaceBase):
                                                                          tire_stiffness_factor=tire_stiffness_factor)
 
     # longitudinal
-    #ret.longitudinalTuning.kpBP = [0., 30.*CV.KPH_TO_MS, 60.*CV.KPH_TO_MS, 90.*CV.KPH_TO_MS]
-    #ret.longitudinalTuning.kpV = [1.15, 1.1, 0.9, 0.43]
     ret.longitudinalTuning.kpBP = [0.0, 5.0, 10.0, 20.0, 35.0]
     ret.longitudinalTuning.kpV = [0.6, 0.95, 1.19, 1.27, 1.18]
     
     ret.longitudinalTuning.kiBP = [0., 35.]
     ret.longitudinalTuning.kiV = [0.31, 0.26]
     
-    #ret.longitudinalTuning.kfBP = [15., 20., 25.]
-    #ret.longitudinalTuning.kfV = [1., 0.5, 0.2]
-    
     ret.longitudinalTuning.deadzoneBP = [0., 30.*CV.KPH_TO_MS]
     ret.longitudinalTuning.deadzoneV = [0., 0.04]
-    # ret.longitudinalActuatorDelay = 0.1
-    ret.longitudinalActuatorDelayLowerBound = 0.05
-    ret.longitudinalActuatorDelayUpperBound = 0.05
+    ret.longitudinalActuatorDelayLowerBound = 0.0
+    ret.longitudinalActuatorDelayUpperBound = 0.0
     
-    ret.startAccel = -0.1
-    ret.stopAccel = -0.05
-    ret.startingAccelRate = 1.2
-    ret.stoppingDecelRate = 0.4
-    ret.vEgoStopping = 0.6
-    ret.vEgoStarting = 0.5
+    ret.startAccel = 0.1 # Toyota requets 0 instantly, the hands off to some controller
+    ret.stopAccel = -0.05 # Toyota requests -0.4 when stopped
+    ret.startingAccelRate = 1.2 # when brakes are released
+    ret.stoppingDecelRate = 0.4 # reach stopping target smoothly
+    ret.vEgoStopping = 0.6 # when car starts requesting stopping accel
+    ret.vEgoStarting = 0.5 #needs to be > or == vEgoStopping
     ret.stoppingControl = True
     
     ret.steerLimitTimer = 1.5
