@@ -103,7 +103,7 @@ class CarInterface(CarInterfaceBase):
     ret.longitudinalActuatorDelayLowerBound = 0.01
     ret.longitudinalActuatorDelayUpperBound = 0.01
     
-    ret.startAccel = 0.1 # Toyota requets 0 instantly, the hands off to some controller
+    ret.startAccel = -0.01 # Toyota requets 0 instantly, the hands off to some controller
     ret.stopAccel = -0.05 # Toyota requests -0.4 when stopped
     ret.startingAccelRate = 1.2 # when brakes are released
     ret.stoppingDecelRate = 0.4 # reach stopping target smoothly
