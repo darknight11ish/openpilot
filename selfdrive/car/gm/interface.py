@@ -22,7 +22,7 @@ class CarInterface(CarInterfaceBase):
 #    gas_max_v = [0.6, 0.8, 0.8, 0.8]
     
     gas_max_bp = [0., 10., 25., 40., 60., 80., 100., 110.]
-    gas_max_v = [0.5, 0.52, 0.55, 0.6, 0.67, 0.73, 0.7, 0.7]
+    gas_max_v = [0.5, 0.52, 0.55, 0.61, 0.68, 0.74, 0.71, 0.7]
 
     brake_max_bp = [0, 70., 130.]
     brake_max_v = [-4., -3., -2.1]
@@ -79,7 +79,7 @@ class CarInterface(CarInterfaceBase):
     ret.lateralTuning.pid.kpBP, ret.lateralTuning.pid.kiBP = [[10., 41.0], [10., 41.0]]
     ret.lateralTuning.pid.kpV, ret.lateralTuning.pid.kiV = [[0.18, 0.26], [0.01, 0.02]]
     ret.lateralTuning.pid.kdBP = [10., 41.0]
-    ret.lateralTuning.pid.kdV = [0.315, 0.3184]  # very sensitive to changes greater than 0.001
+    ret.lateralTuning.pid.kdV = [0.315, 0.3179]  # very sensitive to changes greater than 0.001
     ret.lateralTuning.pid.kf = 0.0001
 
     # TODO: get actual value, for now starting with reasonable value for
@@ -99,11 +99,11 @@ class CarInterface(CarInterfaceBase):
     ret.longitudinalTuning.kiV = [0.31, 0.26]
     
     ret.longitudinalTuning.deadzoneBP = [0., 30.*CV.KPH_TO_MS]
-    ret.longitudinalTuning.deadzoneV = [0., 0.04]
+    ret.longitudinalTuning.deadzoneV = [0., 0.001]
     ret.longitudinalActuatorDelayLowerBound = 0.01
     ret.longitudinalActuatorDelayUpperBound = 0.01
     
-    ret.startAccel = -0.01 # Toyota requets 0 instantly, the hands off to some controller
+    ret.startAccel = -0.2 # Toyota requets 0 instantly, the hands off to some controller
     ret.stopAccel = -0.05 # Toyota requests -0.4 when stopped
     ret.startingAccelRate = 1.2 # when brakes are released
     ret.stoppingDecelRate = 0.4 # reach stopping target smoothly
