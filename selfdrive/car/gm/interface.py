@@ -79,7 +79,7 @@ class CarInterface(CarInterfaceBase):
     ret.lateralTuning.pid.kpBP, ret.lateralTuning.pid.kiBP = [[10., 41.0], [10., 41.0]]
     ret.lateralTuning.pid.kpV, ret.lateralTuning.pid.kiV = [[0.18, 0.26], [0.01, 0.02]]
     ret.lateralTuning.pid.kdBP = [10., 41.0]
-    ret.lateralTuning.pid.kdV = [0.314, 0.3181]  # very sensitive to changes greater than 0.001
+    ret.lateralTuning.pid.kdV = [0.314, 0.3178]  # very sensitive to changes greater than 0.001
     ret.lateralTuning.pid.kf = 0.0001
 
     # TODO: get actual value, for now starting with reasonable value for
