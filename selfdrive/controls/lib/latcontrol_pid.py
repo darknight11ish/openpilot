@@ -1,7 +1,6 @@
-import math
-
-from selfdrive.controls.lib.pid import PIController
+from selfdrive.controls.lib.pid import LatPIDController
 from selfdrive.controls.lib.drive_helpers import get_steer_max
+from cereal import car
 from cereal import log
 
 
