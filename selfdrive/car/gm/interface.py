@@ -29,21 +29,6 @@ class CarInterface(CarInterfaceBase):
 
     return interp(v_current_kph, brake_max_bp, brake_max_v), interp(v_current_kph, gas_max_bp, gas_max_v)
 
-  # Volt determined by iteratively plotting and minimizing error for f(angle, speed) = steer.
-  @staticmethod
-  def get_steer_feedforward_volt(desired_angle, v_ego):
-    # maps [-inf,inf] to [-1,1]: sigmoid(34.4 deg) = sigmoid(1) = 0.5
-    # 1 / 0.02904609 = 34.4 deg ~= 36 deg ~= 1/10 circle? Arbitrary?
-    desired_angle *= 0.02904609
-    sigmoid = desired_angle / (1 + fabs(desired_angle))
-    return 0.10006696 * sigmoid * (v_ego + 3.12485927)
-
-  def get_steer_feedforward_function(self):
-    if self.CP.carFingerprint in [CAR.VOLT]:
-      return self.get_steer_feedforward_volt
-    else:
-      return CarInterfaceBase.get_steer_feedforward_default
-
   @staticmethod
   def compute_gb(accel, speed):
     return float(accel) / 4.0
