@@ -89,7 +89,7 @@ class CarInterfaceBase():
     # standard ALC params
     ret.steerControlType = car.CarParams.SteerControlType.torque
     ret.steerMaxBP = [10., 25.]
-    ret.steerMaxV = [1., 1.2]
+    ret.steerMaxV = [1.05, 1.25]
     ret.minSteerSpeed = 0.
 
     ret.pcmCruise = True     # openpilot's state is tied to the PCM's cruise state on most cars
