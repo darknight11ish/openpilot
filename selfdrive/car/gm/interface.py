@@ -40,6 +40,8 @@ class CarInterface(CarInterfaceBase):
 
   def get_steer_feedforward_function(self):
     if self.CP.carFingerprint in [CAR.VOLT]:
+      return self.get_steer_feedforward_volt
+    else:
       return CarInterfaceBase.get_steer_feedforward_default
 
   @staticmethod
