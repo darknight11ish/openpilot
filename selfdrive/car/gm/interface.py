@@ -80,7 +80,7 @@ class CarInterface(CarInterfaceBase):
     ret.lateralTuning.pid.kpV, ret.lateralTuning.pid.kiV = [[0.18, 0.26], [0.01, 0.02]]
     ret.lateralTuning.pid.kdBP = [0.]
     ret.lateralTuning.pid.kdV = [0.318]  # very sensitive to changes greater than 0.001
-    ret.lateralTuning.pid.kf = 0.0001
+    ret.lateralTuning.pid.kf = 0.00015
 
     # TODO: get actual value, for now starting with reasonable value for
     # civic and scaling by mass and wheelbase
@@ -103,7 +103,7 @@ class CarInterface(CarInterfaceBase):
     ret.longitudinalActuatorDelayLowerBound = 0.01
     ret.longitudinalActuatorDelayUpperBound = 0.01
     
-    ret.startAccel = -0.5 # Toyota requets 0 instantly, the hands off to some controller
+    ret.startAccel = -0.8 # Toyota requets 0 instantly, the hands off to some controller
     ret.stopAccel = -0.05 # Toyota requests -0.4 when stopped
     ret.startingAccelRate = 1.3 # when brakes are released
     ret.stoppingDecelRate = 0.8 # reach stopping target smoothly
