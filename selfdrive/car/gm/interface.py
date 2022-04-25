@@ -22,7 +22,7 @@ class CarInterface(CarInterfaceBase):
     gas_max_v = [0.4, 0.5, 0.7, 0.7]
 
     brake_max_bp = [0.]
-    brake_max_v = [-1.0]
+    brake_max_v = [1.0]
 
     return interp(v_current_kph, brake_max_bp, brake_max_v), interp(v_current_kph, gas_max_bp, gas_max_v)
 
