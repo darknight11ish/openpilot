@@ -18,14 +18,11 @@ class CarInterface(CarInterfaceBase):
     #return params.ACCEL_MIN, params.ACCEL_MAX
     v_current_kph = current_speed * CV.MS_TO_KPH
     
-#    gas_max_bp = [0., 30., 60., 90.]
-#    gas_max_v = [0.6, 0.8, 0.8, 0.8]
-    
-    gas_max_bp = [0., 10., 25., 40., 60., 80., 100., 110.]
-    gas_max_v = [0.5, 0.52, 0.55, 0.61, 0.68, 0.74, 0.71, 0.7]
+    gas_max_bp = [0.0, 5.0, 9.0, 35.0]
+    gas_max_v = [0.4, 0.5, 0.7, 0.7]
 
-    brake_max_bp = [0, 70., 130.]
-    brake_max_v = [-4., -3., -2.1]
+    brake_max_bp = [0.]
+    brake_max_v = [-1.0]
 
     return interp(v_current_kph, brake_max_bp, brake_max_v), interp(v_current_kph, gas_max_bp, gas_max_v)
 
@@ -45,6 +42,7 @@ class CarInterface(CarInterfaceBase):
       return CarInterfaceBase.get_steer_feedforward_default
 
   @staticmethod
+
   def compute_gb(accel, speed):
     return float(accel) / 4.0
 
@@ -64,7 +62,7 @@ class CarInterface(CarInterfaceBase):
     ret.enableGasInterceptor = 0x201 in fingerprint[0]
     ret.openpilotLongitudinalControl = ret.enableGasInterceptor
 
-    tire_stiffness_factor = 0.5
+    tire_stiffness_factor = 1.0
 
     ret.minSteerSpeed = 8 * CV.KPH_TO_MS
     ret.steerRateCost = 0.5
@@ -77,10 +75,13 @@ class CarInterface(CarInterfaceBase):
     ret.steerRatioRear = 0.
     ret.centerToFront = ret.wheelbase * 0.49 # wild guess
     ret.lateralTuning.pid.kpBP, ret.lateralTuning.pid.kiBP = [[10., 41.0], [10., 41.0]]
-    ret.lateralTuning.pid.kpV, ret.lateralTuning.pid.kiV = [[0.18, 0.26], [0.01, 0.02]]
+    ret.lateralTuning.pid.kpV, ret.lateralTuning.pid.kiV = [[0.18, 0.268], [0.01, 0.02]]
     ret.lateralTuning.pid.kdBP = [0.]
     ret.lateralTuning.pid.kdV = [0.318]  # very sensitive to changes greater than 0.001
-    ret.lateralTuning.pid.kf = 0.00015
+    ret.lateralTuning.pid.kf = 0.0003
+    ret.steerMaxBP = [10., 25.]
+    ret.steerMaxV = [1., 1.2]
+
 
     # TODO: get actual value, for now starting with reasonable value for
     # civic and scaling by mass and wheelbase
@@ -98,16 +99,16 @@ class CarInterface(CarInterfaceBase):
     ret.longitudinalTuning.kiBP = [0., 35.]
     ret.longitudinalTuning.kiV = [0.31, 0.26]
     
-    ret.longitudinalTuning.deadzoneBP = [0., 30.*CV.KPH_TO_MS]
-    ret.longitudinalTuning.deadzoneV = [0., 0.001]
-    ret.longitudinalActuatorDelayLowerBound = 0.01
-    ret.longitudinalActuatorDelayUpperBound = 0.01
+    ret.longitudinalTuning.deadzoneBP = [0.]
+    ret.longitudinalTuning.deadzoneV = [0.]
+    ret.longitudinalActuatorDelayLowerBound = 0.15
+    ret.longitudinalActuatorDelayUpperBound = 0.15
     
-    ret.startAccel = -0.8 # Toyota requets 0 instantly, the hands off to some controller
-    ret.stopAccel = -0.05 # Toyota requests -0.4 when stopped
+    ret.startAccel = -0.7 # Toyota requets 0 instantly, the hands off to some controller
+    ret.stopAccel = -5.0 # Toyota requests -0.4 when stopped
     ret.startingAccelRate = 1.3 # when brakes are released
     ret.stoppingDecelRate = 0.8 # reach stopping target smoothly
-    ret.vEgoStopping = 0.6 # when car starts requesting stopping accel
+    ret.vEgoStopping = 0.5 # when car starts requesting stopping accel
     ret.vEgoStarting = 0.5 #needs to be > or == vEgoStopping
     ret.stoppingControl = True
     
