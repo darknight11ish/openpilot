@@ -253,9 +253,10 @@ class CarInterface(CarInterfaceBase):
 
     ret = self.CS.update(self.cp, self.cp_loopback)
 
+    ret.cruiseState.enabled = self.CS.main_on or self.CS.adaptive_Cruise
     ret.canValid = self.cp.can_valid and self.cp_loopback.can_valid
     ret.steeringRateLimited = self.CC.steer_rate_limited if self.CC is not None else False
-
+    
     buttonEvents = []
 
     if self.CS.cruise_buttons != self.CS.prev_cruise_buttons and self.CS.prev_cruise_buttons != CruiseButtons.INIT:
@@ -268,13 +269,11 @@ class CarInterface(CarInterfaceBase):
         be.pressed = False
         but = self.CS.prev_cruise_buttons
       if but == CruiseButtons.RES_ACCEL:
-        if not (ret.cruiseState.enabled and ret.standstill):
-          be.type = ButtonType.accelCruise  # Suppress resume button if we're resuming from stop so we don't adjust speed.
+        be.type = ButtonType.accelCruise
       elif but == CruiseButtons.DECEL_SET:
         be.type = ButtonType.decelCruise
       elif but == CruiseButtons.CANCEL:
-        if not self.CP.enableGasInterceptor: #need to use cancel to disable cc with Pedal TODO: auto-disengage CC
-          be.type = ButtonType.cancel
+        be.type = ButtonType.cancel
       elif but == CruiseButtons.MAIN:
         be.type = ButtonType.altButton3
       buttonEvents.append(be)
@@ -293,15 +292,72 @@ class CarInterface(CarInterfaceBase):
       events.add(EventName.accFaulted)
     if ret.vEgo < self.CP.minSteerSpeed:
       events.add(car.CarEvent.EventName.belowSteerSpeed)
+      
+    if self.CP.enableGasInterceptor:
+      if self.CS.adaptive_Cruise and ret.brakePressed:
+        events.add(EventName.pedalPressed)
+        self.CS.adaptive_Cruise = False
+        self.CS.enable_lkas = False
 
     # handle button presses
-    for b in ret.buttonEvents:
-      # do enable on both accel and decel buttons
-      if b.type in (ButtonType.accelCruise, ButtonType.decelCruise) and not b.pressed:
-        events.add(EventName.buttonEnable)
-      # do disable on button down
-      if b.type == ButtonType.cancel and b.pressed:
-        events.add(EventName.buttonCancel)
+    if self.CP.enableGasInterceptor:
+      if not self.CS.main_on : #lat dis-engage
+        for b in ret.buttonEvents:
+          if (b.type == ButtonType.decelCruise and not b.pressed) and not self.CS.adaptive_Cruise:
+            self.CS.adaptive_Cruise = True
+            self.CS.enable_lkas = True
+            events.add(EventName.buttonEnable)
+            break
+          if (b.type == ButtonType.accelCruise and not b.pressed) and not self.CS.adaptive_Cruise:
+            self.CS.adaptive_Cruise = True
+            self.CS.enable_lkas = False
+            events.add(EventName.buttonEnable)
+            break
+          if (b.type == ButtonType.cancel and b.pressed) and self.CS.adaptive_Cruise:
+            self.CS.adaptive_Cruise = False
+            self.CS.enable_lkas = False
+            events.add(EventName.buttonCancel)
+            break
+          if (b.type == ButtonType.altButton3 and b.pressed) : #and self.CS.adaptive_Cruise
+            self.CS.adaptive_Cruise = False
+            self.CS.enable_lkas = True
+            break
+      else :#lat engage
+        # self.CS.adaptive_Cruise = False
+        # self.CS.enable_lkas = True
+        #
+        for b in ret.buttonEvents:
+          if not self.CS.adaptive_Cruise and (b.type == ButtonType.altButton3 and b.pressed) : #and self.CS.adaptive_Cruise
+            self.CS.adaptive_Cruise = False
+            self.CS.enable_lkas = False
+            break
+
+    else :
+      if self.CS.main_on: #wihtout pedal case
+        self.CS.adaptive_Cruise = False
+        self.CS.enable_lkas = True
+      else:
+        self.CS.adaptive_Cruise = False
+        self.CS.enable_lkas = False
+
+    #Added by jc01rho inspired by JangPoo
+    if self.CS.main_on  and self.CS.enable_lkas and not self.CS.adaptive_Cruise and ret.cruiseState.enabled and ret.gearShifter == GearShifter.drive and ret.vEgo > 2.4 and not ret.brakePressed :
+      if ret.cruiseState.available and not ret.seatbeltUnlatched and not ret.espDisabled and self.flag_pcmEnable_able :
+
+        if self.flag_pcmEnable_initialSet == False :
+          self.initial_pcmEnable_counter = self.initial_pcmEnable_counter + 1
+          if self.initial_pcmEnable_counter > 750 :
+            # events.add(EventName.pcmEnable)
+            # self.flag_pcmEnable_initialSet = True
+            self.flag_pcmEnable_able = False
+            self.initial_pcmEnable_counter = 0
+        else :
+          self.flag_pcmEnable_able = False
+          events.add(EventName.buttonEnable)
+          # self.flag_pcmEnable_initialSet = True
+          # self.initial_pcmEnable_counter = 0
+    else  :
+      self.flag_pcmEnable_able = True
 
     ret.events = events.to_msg()
 
