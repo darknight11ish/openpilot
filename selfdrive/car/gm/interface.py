@@ -179,7 +179,7 @@ class CarInterface(CarInterfaceBase):
       
       # Assumes the Bolt is using L-Mode for regen braking.
       ret.longitudinalTuning.kpBP = [0., 35.]
-      ret.longitudinalTuning.kpV = [0.14, 0.35] 
+      ret.longitudinalTuning.kpV = [0.12, 0.35] 
       ret.longitudinalTuning.kiBP = [0., 35.] 
       ret.longitudinalTuning.kiV = [0.22, 0.34]
       ret.stoppingDecelRate = 0.17  # reach stopping target smoothly, brake_travel/s while trying to stop
