@@ -172,14 +172,14 @@ class CarInterface(CarInterfaceBase):
       ret.steerRateCost = 0.5
       ret.steerActuatorDelay = 0.
       ret.lateralTuning.pid.kpBP, ret.lateralTuning.pid.kiBP = [[10., 41.0], [10., 41.0]]
-      ret.lateralTuning.pid.kpV, ret.lateralTuning.pid.kiV = [[0.18, 0.265], [0.0105, 0.021]]
+      ret.lateralTuning.pid.kpV, ret.lateralTuning.pid.kiV = [[0.18, 0.268], [0.01, 0.021]]
       ret.lateralTuning.pid.kf = 0.00007
       ret.steerMaxBP = [10., 25.]
       ret.steerMaxV = [1., 1.2]
       
       # Assumes the Bolt is using L-Mode for regen braking.
       ret.longitudinalTuning.kpBP = [0., 35.]
-      ret.longitudinalTuning.kpV = [0.15, 0.35] 
+      ret.longitudinalTuning.kpV = [0.14, 0.35] 
       ret.longitudinalTuning.kiBP = [0., 35.] 
       ret.longitudinalTuning.kiV = [0.22, 0.34]
       ret.stoppingDecelRate = 0.17  # reach stopping target smoothly, brake_travel/s while trying to stop
