@@ -41,12 +41,12 @@ CRASH_DISTANCE = .5
 LIMIT_COST = 1e6
 ACADOS_SOLVER_TYPE = 'SQP_RTI'
 
-
+# CRUISE_GAP not in use per line 335-339
 CRUISE_GAP_BP = [1., 2., 3., 4.]
 CRUISE_GAP_V = [1.1, 1.3, 1.58, 2.10]
 
-AUTO_TR_BP = [0., 30.*CV.KPH_TO_MS,50.*CV.KPH_TO_MS, 70.*CV.KPH_TO_MS, 110.*CV.KPH_TO_MS]
-AUTO_TR_V = [1.1, 1.175,1.225, 1.27, 1.45]
+AUTO_TR_BP = [0., 50.*CV.KPH_TO_MS, 70.*CV.KPH_TO_MS, 110.*CV.KPH_TO_MS, 130.*CV.KPH_TO_MS]
+AUTO_TR_V = [1.12, 1.16, 1.22, 1.35, 1.46]
 
 # AUTO_TR_CRUISE_GAP = 4
 DIFF_RADAR_VISION = 1.5
@@ -62,8 +62,8 @@ T_IDXS = np.array(T_IDXS_LST)
 T_DIFFS = np.diff(T_IDXS, prepend=[0.])
 MIN_ACCEL = -3.5
 T_FOLLOW = 1.45
-COMFORT_BRAKE = 2.5
-STOP_DISTANCE = 6.25
+COMFORT_BRAKE = 2.6
+STOP_DISTANCE = 5.8
 
 def get_stopped_equivalence_factor(v_lead):
   return (v_lead**2) / (2 * COMFORT_BRAKE)
