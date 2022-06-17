@@ -262,16 +262,20 @@ class CarInterface(CarInterfaceBase):
       ret.lateralTuning.pid.kf = 1. # for get_steer_feedforward_bolt()
       
       # TODO: Needs refinement for stop and go, doesn't fully stop
-      # Assumes the Bolt is using L-Mode for regen braking
       ret.longitudinalTuning.kpBP = [0., 35.]
-      ret.longitudinalTuning.kpV = [0.15, 0.35] 
+      ret.longitudinalTuning.kpV = [0.12, 0.35] 
       ret.longitudinalTuning.kiBP = [0., 35.] 
       ret.longitudinalTuning.kiV = [0.22, 0.34]
-      ret.stoppingDecelRate = 0.17  # reach stopping target smoothly, brake_travel/s while trying to stop
-      ret.stopAccel = 5.0 # Required acceleraton to keep vehicle stationary
-      ret.vEgoStopping = 0.5  # Speed at which the car goes into stopping state, when car starts requesting stopping accel
-      ret.vEgoStarting = 0.5  # Speed at which the car goes into starting state, when car starts requesting starting accel,
-      # vEgoStarting needs to be > or == vEgoStopping to avoid state transition oscillation
+    
+      ret.longitudinalTuning.deadzoneBP = [0.]
+      ret.longitudinalTuning.deadzoneV = [0.]
+      ret.longitudinalActuatorDelayLowerBound = 0.16
+      ret.longitudinalActuatorDelayUpperBound = 0.16
+    
+      ret.stopAccel = -15.0
+      ret.stoppingDecelRate = 0.17
+      ret.vEgoStopping = 0.5
+      ret.vEgoStarting = 0.5
       ret.stoppingControl = True
       
     elif candidate == CAR.EQUINOX_NR:
