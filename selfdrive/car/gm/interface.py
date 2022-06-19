@@ -147,7 +147,7 @@ class CarInterface(CarInterfaceBase):
       ret.lateralTuning.pid.kpBP, ret.lateralTuning.pid.kiBP = [[10., 41.0], [10., 41.0]]
       ret.lateralTuning.pid.kpV, ret.lateralTuning.pid.kiV = [[0.14, 0.24], [0.01, 0.021]]
       ret.lateralTuning.pid.kdBP = [0.]
-      ret.lateralTuning.pid.kdV = [0.5]
+      ret.lateralTuning.pid.kdV = [0.55]
       ret.lateralTuning.pid.kf = 1. # for get_steer_feedforward_bolt()
       
       
@@ -162,7 +162,7 @@ class CarInterface(CarInterfaceBase):
       ret.lateralTuning.torque.ki = 0.18 / max_lat_accel
       ret.lateralTuning.torque.friction = 0.01
 
-      ret.lateralTuning.torque.kd = 1.
+      ret.lateralTuning.torque.kd = 0.92
       ret.lateralTuning.torque.deadzone = 0.01
 
     # TODO: get actual value, for now starting with reasonable value for
