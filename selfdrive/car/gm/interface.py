@@ -145,9 +145,9 @@ class CarInterface(CarInterfaceBase):
       ret.steerRateCost = 0.5
       ret.steerActuatorDelay = 0.
       ret.lateralTuning.pid.kpBP, ret.lateralTuning.pid.kiBP = [[10., 41.0], [10., 41.0]]
-      ret.lateralTuning.pid.kpV, ret.lateralTuning.pid.kiV = [[0.14, 0.24], [0.01, 0.021]]
+      ret.lateralTuning.pid.kpV, ret.lateralTuning.pid.kiV = [[0.18, 0.26], [0.01, 0.021]]
       ret.lateralTuning.pid.kdBP = [0.]
-      ret.lateralTuning.pid.kdV = [0.55]
+      ret.lateralTuning.pid.kdV = [0.3]
       ret.lateralTuning.pid.kf = 0.00005
       
       
@@ -162,7 +162,7 @@ class CarInterface(CarInterfaceBase):
       ret.lateralTuning.torque.ki = 0.18 / max_lat_accel
       ret.lateralTuning.torque.friction = 0.01
 
-      ret.lateralTuning.torque.kd = 0.87
+      ret.lateralTuning.torque.kd = 0.95
       ret.lateralTuning.torque.deadzone = 0.01
 
     # TODO: get actual value, for now starting with reasonable value for
