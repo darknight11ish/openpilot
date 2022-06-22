@@ -49,20 +49,20 @@ class CarInterface(CarInterfaceBase):
     SPEED = -0.002654134623368279
     return get_steer_feedforward_sigmoid(desired_angle, v_ego, ANGLE, ANGLE_OFFSET, SIGMOID_SPEED, SIGMOID, SPEED)
 
-  @staticmethod
-  def get_steer_feedforward_bolt(desired_angle, v_ego):
-    ANGLE = 0.06370624896135679
-    ANGLE_OFFSET = 0.#32536345911579184
-    SIGMOID_SPEED = 0.06479105208670367
-    SIGMOID = 0.34485246691603205
-    SPEED = -0.0010645479469461995
-    return get_steer_feedforward_sigmoid(desired_angle, v_ego, ANGLE, ANGLE_OFFSET, SIGMOID_SPEED, SIGMOID, SPEED)
+ # @staticmethod
+ # def get_steer_feedforward_bolt(desired_angle, v_ego):
+ #   ANGLE = 0.06370624896135679
+ #   ANGLE_OFFSET = 0.#32536345911579184
+ #   SIGMOID_SPEED = 0.06479105208670367
+ #   SIGMOID = 0.34485246691603205
+ #   SPEED = -0.0010645479469461995
+ #   return get_steer_feedforward_sigmoid(desired_angle, v_ego, ANGLE, ANGLE_OFFSET, SIGMOID_SPEED, SIGMOID, SPEED)
 
 
   def get_steer_feedforward_function(self):
-      return self.get_steer_feedforward_bolt
+      #return self.get_steer_feedforward_bolt
     #else:
-      #return CarInterfaceBase.get_steer_feedforward_default
+      return CarInterfaceBase.get_steer_feedforward_default
 
     
   @staticmethod
@@ -119,19 +119,18 @@ class CarInterface(CarInterfaceBase):
       ret.lateralTuning.indi.timeConstantV = [1.4]
       ret.lateralTuning.indi.actuatorEffectivenessBP = [0.]
       ret.lateralTuning.indi.actuatorEffectivenessV = [1.8]
+   
     elif lateral_control == 'LQR':
       ret.lateralTuning.init('lqr')
 
       ret.lateralTuning.lqr.scale = 1950.0
       ret.lateralTuning.lqr.ki = 0.032
       ret.lateralTuning.lqr.dcGain = 0.002237852961363602
-
       ret.lateralTuning.lqr.a = [0., 1., -0.22619643, 1.21822268]
       ret.lateralTuning.lqr.b = [-1.92006585e-04, 3.95603032e-05]
       ret.lateralTuning.lqr.c = [1., 0.]
       ret.lateralTuning.lqr.k = [-110.73572306, 451.22718255]
       ret.lateralTuning.lqr.l = [0.3233671, 0.3185757]
-      
       
     elif lateral_control == 'PID':
       ret.lateralTuning.init('pid')
@@ -145,14 +144,12 @@ class CarInterface(CarInterfaceBase):
       ret.steerRateCost = 0.5
       ret.steerActuatorDelay = 0.
       ret.lateralTuning.pid.kpBP, ret.lateralTuning.pid.kiBP = [[10., 41.0], [10., 41.0]]
-      ret.lateralTuning.pid.kpV, ret.lateralTuning.pid.kiV = [[0.18, 0.26], [0.01, 0.021]]
+      ret.lateralTuning.pid.kpV, ret.lateralTuning.pid.kiV = [[0.171, 0.273], [0.01, 0.021]]
       ret.lateralTuning.pid.kdBP = [0.]
       ret.lateralTuning.pid.kdV = [0.3]
       ret.lateralTuning.pid.kf = 0.00005
       
-      
-      
-      
+       
     else:
       ret.lateralTuning.init('torque')
       ret.lateralTuning.torque.useSteeringAngle = True
@@ -162,7 +159,7 @@ class CarInterface(CarInterfaceBase):
       ret.lateralTuning.torque.ki = 0.18 / max_lat_accel
       ret.lateralTuning.torque.friction = 0.01
 
-      ret.lateralTuning.torque.kd = 0.95
+      ret.lateralTuning.torque.kd = 1.0
       ret.lateralTuning.torque.deadzone = 0.01
 
     # TODO: get actual value, for now starting with reasonable value for
