@@ -118,7 +118,7 @@ class CarInterface(CarInterfaceBase):
       ret.lateralTuning.indi.timeConstantBP = [10., 30.]
       ret.lateralTuning.indi.timeConstantV = [1.8, 3.5]
       ret.lateralTuning.indi.actuatorEffectivenessBP = [0.]
-      ret.lateralTuning.indi.actuatorEffectivenessV = [2.0]
+      ret.lateralTuning.indi.actuatorEffectivenessV = [2.1]
    
     elif lateral_control == 'LQR':
       ret.lateralTuning.init('lqr')
@@ -144,7 +144,7 @@ class CarInterface(CarInterfaceBase):
       ret.steerRateCost = 0.5
       ret.steerActuatorDelay = 0.
       ret.lateralTuning.pid.kpBP, ret.lateralTuning.pid.kiBP = [[10., 41.0], [10., 41.0]]
-      ret.lateralTuning.pid.kpV, ret.lateralTuning.pid.kiV = [[0.18, 0.284], [0.01, 0.02]]
+      ret.lateralTuning.pid.kpV, ret.lateralTuning.pid.kiV = [[0.18, 0.276], [0.01, 0.021]]
       ret.lateralTuning.pid.kdBP = [0.]
       ret.lateralTuning.pid.kdV = [0.3]  #corolla from shane fork : 0.725
       ret.lateralTuning.pid.kf = 0.00005
@@ -159,7 +159,7 @@ class CarInterface(CarInterfaceBase):
       ret.lateralTuning.torque.friction = 0.01
 
       ret.lateralTuning.torque.kd = 1.0
-      ret.lateralTuning.torque.deadzone = 0.01
+      ret.lateralTuning.torque.deadzone = 0.
 
     # TODO: get actual value, for now starting with reasonable value for
     # civic and scaling by mass and wheelbase
@@ -181,7 +181,7 @@ class CarInterface(CarInterfaceBase):
     ret.longitudinalActuatorDelayLowerBound = 0.16
     ret.longitudinalActuatorDelayUpperBound = 0.16
     
-    ret.stopAccel = -15.0
+    ret.stopAccel = -20.0
     ret.stoppingDecelRate = 0.17
     ret.vEgoStopping = 0.5
     ret.vEgoStarting = 0.5
