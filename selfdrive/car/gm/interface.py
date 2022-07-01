@@ -192,14 +192,14 @@ class CarInterface(CarInterfaceBase):
 
     # longitudinal
     ret.longitudinalTuning.kpBP = [0., 35.]
-    ret.longitudinalTuning.kpV = [0.13, 0.36] 
+    ret.longitudinalTuning.kpV = [0.12, 0.35] 
     ret.longitudinalTuning.kiBP = [0., 35.] 
     ret.longitudinalTuning.kiV = [0.22, 0.34]
     
     ret.longitudinalTuning.deadzoneBP = [0.]
     ret.longitudinalTuning.deadzoneV = [0.]
-    ret.longitudinalActuatorDelayLowerBound = 0.16
-    ret.longitudinalActuatorDelayUpperBound = 0.16
+    ret.longitudinalActuatorDelayLowerBound = 0.15
+    ret.longitudinalActuatorDelayUpperBound = 0.15
    
     ret.stopAccel = -2.0
     ret.stoppingDecelRate = 4.0 #0.17 in my fork, large change?
