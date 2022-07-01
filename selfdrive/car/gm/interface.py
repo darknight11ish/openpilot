@@ -163,10 +163,10 @@ class CarInterface(CarInterfaceBase):
       ret.steerActuatorDelay = 0.
       
       ret.lateralTuning.pid.kpBP, ret.lateralTuning.pid.kiBP = [[10., 41.0], [10., 41.0]]
-      ret.lateralTuning.pid.kpV, ret.lateralTuning.pid.kiV = [[0.18, 0.282], [0.01, 0.02]]
+      ret.lateralTuning.pid.kpV, ret.lateralTuning.pid.kiV = [[0.17, 0.282], [0.01, 0.02]]
       ret.lateralTuning.pid.kdBP = [0.]
-      ret.lateralTuning.pid.kdV = [0.3]  #corolla from shane fork : 0.725
-      ret.lateralTuning.pid.kf = 0.000055
+      ret.lateralTuning.pid.kdV = [0.3]  
+      ret.lateralTuning.pid.kf = 0.00005
       
       
     else:
@@ -192,7 +192,7 @@ class CarInterface(CarInterfaceBase):
 
     # longitudinal
     ret.longitudinalTuning.kpBP = [0., 35.]
-    ret.longitudinalTuning.kpV = [0.12, 0.35] 
+    ret.longitudinalTuning.kpV = [0.13, 0.36] 
     ret.longitudinalTuning.kiBP = [0., 35.] 
     ret.longitudinalTuning.kiV = [0.22, 0.34]
     
