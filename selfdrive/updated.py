@@ -52,8 +52,8 @@ OVERLAY_METADATA = os.path.join(STAGING_ROOT, "metadata")
 OVERLAY_MERGED = os.path.join(STAGING_ROOT, "merged")
 FINALIZED = os.path.join(STAGING_ROOT, "finalized")
 
-DAYS_NO_CONNECTIVITY_MAX = 365     # do not allow to engage after this many days
-DAYS_NO_CONNECTIVITY_PROMPT = 365  # send an offroad prompt after this many days
+DAYS_NO_CONNECTIVITY_MAX = 36500     # do not allow to engage after this many days
+DAYS_NO_CONNECTIVITY_PROMPT = 36500  # send an offroad prompt after this many days
 
 class WaitTimeHelper:
   def __init__(self, proc):
