@@ -134,9 +134,9 @@ class CarInterface(CarInterfaceBase):
       ret.lateralTuning.indi.outerLoopGainBP = [10., 30.]
       ret.lateralTuning.indi.outerLoopGainV = [4.5, 7.0]
       ret.lateralTuning.indi.timeConstantBP = [10., 30.]
-      ret.lateralTuning.indi.timeConstantV = [1.9, 3.85]
+      ret.lateralTuning.indi.timeConstantV = [1.8, 3.68]
       ret.lateralTuning.indi.actuatorEffectivenessBP = [0.]
-      ret.lateralTuning.indi.actuatorEffectivenessV = [2.1]
+      ret.lateralTuning.indi.actuatorEffectivenessV = [2.2]
       
       
     elif lateral_control == 'LQR':
@@ -164,9 +164,9 @@ class CarInterface(CarInterfaceBase):
       ret.steerActuatorDelay = 0.
       
       ret.lateralTuning.pid.kpBP, ret.lateralTuning.pid.kiBP = [[10., 41.0], [10., 41.0]]
-      ret.lateralTuning.pid.kpV, ret.lateralTuning.pid.kiV = [[0.18, 0.283], [0.01, 0.02]]
+      ret.lateralTuning.pid.kpV, ret.lateralTuning.pid.kiV = [[0.18, 0.273], [0.01, 0.021]]
       ret.lateralTuning.pid.kdBP = [0.]
-      ret.lateralTuning.pid.kdV = [0.3]  
+      ret.lateralTuning.pid.kdV = [0.33]  
       ret.lateralTuning.pid.kf = 0.000045
       
       
@@ -179,7 +179,7 @@ class CarInterface(CarInterfaceBase):
       ret.lateralTuning.torque.ki = 0.2 / max_lat_accel
       ret.lateralTuning.torque.friction = 0.008
 
-      ret.lateralTuning.torque.kd = 1.08
+      ret.lateralTuning.torque.kd = 1.
       ret.lateralTuning.torque.deadzone = 0. #DOES deadzone need to be 0.01?
 
     # TODO: get actual value, for now starting with reasonable value for
