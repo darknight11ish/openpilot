@@ -129,28 +129,32 @@ class CarInterface(CarInterfaceBase):
       ret.lateralTuning.init('indi')
       
       ret.steerActuatorDelay = 0.1
-      ret.steerRateCost = 0.7
+      ret.steerRateCost = 1.0
+      
       ret.lateralTuning.indi.innerLoopGainBP = [10., 30.]
-      ret.lateralTuning.indi.innerLoopGainV = [5.25, 7.3]
+      ret.lateralTuning.indi.innerLoopGainV = [5.5, 8.0]
       ret.lateralTuning.indi.outerLoopGainBP = [10., 30.]
       ret.lateralTuning.indi.outerLoopGainV = [4.5, 7.0]
       ret.lateralTuning.indi.timeConstantBP = [10., 30.]
-      ret.lateralTuning.indi.timeConstantV = [1.8, 3.68]
+      ret.lateralTuning.indi.timeConstantV = [1.8, 3.5]
       ret.lateralTuning.indi.actuatorEffectivenessBP = [0.]
-      ret.lateralTuning.indi.actuatorEffectivenessV = [2.2]
+      ret.lateralTuning.indi.actuatorEffectivenessV = [2.0]
       
       
     elif lateral_control == 'LQR':
       ret.lateralTuning.init('lqr')
       
+      ret.steerRateCost = 1.0
+      ret.steerActuatorDelay = 0.1
+      
       ret.lateralTuning.lqr.scale = 1950.0
-      ret.lateralTuning.lqr.ki = 0.032
-      ret.lateralTuning.lqr.dcGain = 0.002237852961363602
+      ret.lateralTuning.lqr.ki = 0.055
       ret.lateralTuning.lqr.a = [0., 1., -0.22619643, 1.21822268]
       ret.lateralTuning.lqr.b = [-1.92006585e-04, 3.95603032e-05]
       ret.lateralTuning.lqr.c = [1., 0.]
       ret.lateralTuning.lqr.k = [-110.73572306, 451.22718255]
       ret.lateralTuning.lqr.l = [0.3233671, 0.3185757]
+      ret.lateralTuning.lqr.dcGain = 0.002237852961363602
       
       
     elif lateral_control == 'PID':
@@ -161,6 +165,7 @@ class CarInterface(CarInterfaceBase):
       ret.steerRatioRear = 0.
       ret.centerToFront = 2.0828 #ret.wheelbase * 0.4 # wild guess
       tire_stiffness_factor = 1.0
+      
       ret.steerRateCost = 0.5
       ret.steerActuatorDelay = 0.
       
