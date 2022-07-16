@@ -138,7 +138,7 @@ class CarInterface(CarInterfaceBase):
       ret.lateralTuning.indi.timeConstantBP = [10., 30.]
       ret.lateralTuning.indi.timeConstantV = [1.8, 3.5]
       ret.lateralTuning.indi.actuatorEffectivenessBP = [0.]
-      ret.lateralTuning.indi.actuatorEffectivenessV = [2.0]
+      ret.lateralTuning.indi.actuatorEffectivenessV = [2.1]
       
       
     elif lateral_control == 'LQR':
@@ -182,10 +182,10 @@ class CarInterface(CarInterfaceBase):
       max_lat_accel = 2.7
       ret.lateralTuning.torque.kp = 2.0 / max_lat_accel
       ret.lateralTuning.torque.kf = 1.0 / max_lat_accel
-      ret.lateralTuning.torque.ki = 0.19 / max_lat_accel
+      ret.lateralTuning.torque.ki = 0.20 / max_lat_accel
       ret.lateralTuning.torque.friction = 0.008
 
-      ret.lateralTuning.torque.kd = 1.0
+      ret.lateralTuning.torque.kd = 1.06
       ret.lateralTuning.torque.deadzone = 0.01 #DOES deadzone need to be 0.01?
 
     # TODO: get actual value, for now starting with reasonable value for
