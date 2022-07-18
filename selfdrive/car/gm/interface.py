@@ -170,7 +170,7 @@ class CarInterface(CarInterfaceBase):
       ret.steerActuatorDelay = 0.
       
       ret.lateralTuning.pid.kpBP, ret.lateralTuning.pid.kiBP = [[10., 41.0], [10., 41.0]]
-      ret.lateralTuning.pid.kpV, ret.lateralTuning.pid.kiV = [[0.18, 0.283], [0.01, 0.021]]
+      ret.lateralTuning.pid.kpV, ret.lateralTuning.pid.kiV = [[0.18, 0.275], [0.01, 0.021]]
       ret.lateralTuning.pid.kdBP = [0.]
       ret.lateralTuning.pid.kdV = [0.3]  
       ret.lateralTuning.pid.kf = 0.000045
@@ -179,13 +179,13 @@ class CarInterface(CarInterfaceBase):
     else:
       ret.lateralTuning.init('torque')
       ret.lateralTuning.torque.useSteeringAngle = True
-      max_lat_accel = 2.7
+      max_lat_accel = 2.5
       ret.lateralTuning.torque.kp = 2.0 / max_lat_accel
       ret.lateralTuning.torque.kf = 1.0 / max_lat_accel
-      ret.lateralTuning.torque.ki = 0.20 / max_lat_accel
+      ret.lateralTuning.torque.ki = 0.19 / max_lat_accel
       ret.lateralTuning.torque.friction = 0.008
 
-      ret.lateralTuning.torque.kd = 1.06
+      ret.lateralTuning.torque.kd = 1.0
       ret.lateralTuning.torque.deadzone = 0.01 #DOES deadzone need to be 0.01?
 
     # TODO: get actual value, for now starting with reasonable value for
