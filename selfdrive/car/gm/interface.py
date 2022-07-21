@@ -138,7 +138,7 @@ class CarInterface(CarInterfaceBase):
       ret.lateralTuning.indi.timeConstantBP = [10., 30.]
       ret.lateralTuning.indi.timeConstantV = [1.8, 3.5]
       ret.lateralTuning.indi.actuatorEffectivenessBP = [0.]
-      ret.lateralTuning.indi.actuatorEffectivenessV = [2.2]
+      ret.lateralTuning.indi.actuatorEffectivenessV = [2.1]
       
       
     elif lateral_control == 'LQR':
@@ -172,12 +172,14 @@ class CarInterface(CarInterfaceBase):
       ret.lateralTuning.pid.kpBP, ret.lateralTuning.pid.kiBP = [[10., 41.0], [10., 41.0]]
       ret.lateralTuning.pid.kpV, ret.lateralTuning.pid.kiV = [[0.18, 0.275], [0.01, 0.021]]
       ret.lateralTuning.pid.kdBP = [0.]
-      ret.lateralTuning.pid.kdV = [0.32]  
+      ret.lateralTuning.pid.kdV = [0.31]  
       ret.lateralTuning.pid.kf = 0.000045
       
       
     else:
       ret.lateralTuning.init('torque')
+      ret.steerActuatorDelay = 0.1
+      
       ret.lateralTuning.torque.useSteeringAngle = True
       max_lat_accel = 2.7
       ret.lateralTuning.torque.kp = 2.0 / max_lat_accel
