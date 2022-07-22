@@ -12,7 +12,6 @@ GearShifter = car.CarState.GearShifter
 ButtonType = car.CarState.ButtonEvent.Type
 EventName = car.CarEvent.EventName
 
-
 # meant for torque fits
 def get_steer_feedforward_erf(angle, speed, ANGLE_COEF, ANGLE_OFFSET, SPEED_OFFSET, SPEED_POWER, SIGMOID_COEF, SPEED_COEF):
   x = ANGLE_COEF * (angle + ANGLE_OFFSET)
@@ -56,7 +55,7 @@ class CarInterface(CarInterfaceBase):
     SIGMOID = 0.34485246691603205
     SPEED = -0.0010645479469461995
     return get_steer_feedforward_sigmoid(desired_angle, v_ego, ANGLE, ANGLE_OFFSET, SIGMOID_SPEED, SIGMOID, SPEED)
-  
+
   @staticmethod
   def get_steer_feedforward_bolt_torque(desired_lateral_accel, speed):
     ANGLE_COEF = 0.18708832
@@ -76,9 +75,9 @@ class CarInterface(CarInterfaceBase):
     return CarInterfaceBase.get_steer_feedforward_default
       
   def get_steer_feedforward_function_torque(self):
-     # return self.get_steer_feedforward_bolt_torque
+     return self.get_steer_feedforward_bolt_torque
     #else:
-    return CarInterfaceBase.get_steer_feedforward_torque_default 
+    #return CarInterfaceBase.get_steer_feedforward_torque_default 
 
     
   @staticmethod
@@ -110,7 +109,7 @@ class CarInterface(CarInterfaceBase):
 
 
 
-    tire_stiffness_factor = 0.5
+    tire_stiffness_factor = 1.0
 
     ret.minSteerSpeed = 5 * CV.MPH_TO_MS
     ret.steerRateCost = 0.35 # def : 2.0
@@ -119,9 +118,9 @@ class CarInterface(CarInterfaceBase):
     ret.minEnableSpeed = -1
     ret.mass = 1625. + STD_CARGO_KG
     ret.wheelbase = 2.60096
-    ret.steerRatio = 16.85
+    ret.steerRatio = 16.8
     ret.steerRatioRear = 0.
-    ret.centerToFront = ret.wheelbase * 0.49 # wild guess
+    ret.centerToFront = 2.0828
     ret.disableLateralLiveTuning = True
 
     lateral_control = Params().get("LateralControl", encoding='utf-8')
@@ -138,7 +137,7 @@ class CarInterface(CarInterfaceBase):
       ret.lateralTuning.indi.timeConstantBP = [10., 30.]
       ret.lateralTuning.indi.timeConstantV = [1.8, 3.5]
       ret.lateralTuning.indi.actuatorEffectivenessBP = [0.]
-      ret.lateralTuning.indi.actuatorEffectivenessV = [2.1]
+      ret.lateralTuning.indi.actuatorEffectivenessV = [2.]
       
       
     elif lateral_control == 'LQR':
@@ -178,17 +177,14 @@ class CarInterface(CarInterfaceBase):
       
     else:
       ret.lateralTuning.init('torque')
-      ret.steerActuatorDelay = 0.1
-      
+      ret.steerActuatorDelay = 0.
+      max_lateral_accel = 3.0
       ret.lateralTuning.torque.useSteeringAngle = True
-      max_lat_accel = 2.7
-      ret.lateralTuning.torque.kp = 2.0 / max_lat_accel
-      ret.lateralTuning.torque.kf = 1.0 / max_lat_accel
-      ret.lateralTuning.torque.ki = 0.19 / max_lat_accel
-      ret.lateralTuning.torque.friction = 0.008
-
-      ret.lateralTuning.torque.kd = 1.0
-      ret.lateralTuning.torque.deadzone = 0.01 #DOES deadzone need to be 0.01?
+      ret.lateralTuning.torque.kp = 1.8 / max_lateral_accel
+      ret.lateralTuning.torque.ki = 0.6 / max_lateral_accel
+      ret.lateralTuning.torque.kd = 4.0 / max_lateral_accel
+      ret.lateralTuning.torque.kf = 1.0 # use with custom torque ff
+      ret.lateralTuning.torque.friction = 0.005
 
     # TODO: get actual value, for now starting with reasonable value for
     # civic and scaling by mass and wheelbase
