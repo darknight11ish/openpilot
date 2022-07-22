@@ -96,7 +96,7 @@ class CarController():
       pedalValue = min(pedalValue, interp(CS.out.vEgo, [0., 19.0 * CV.KPH_TO_MS, 30.0 * CV.KPH_TO_MS], [0.2550, 0.2750, 0.3150]) )
 
       self.comma_pedal_original = pedalValue # (actuators.accel * acc_mult, 0., 1.)
-      self.comma_pedal_new = clip (interp(actuators.accel, [-0.85, -0.325, 0.00, 0.20], [0.0, 0.1600, 0.2190, 0.22150]) + accelFomula , 0., 1.)
+      self.comma_pedal_new = clip (interp(actuators.accel, [-0.725, -0.315, 0.00, 0.20], [0.0, 0.1575, 0.2190, 0.22150]) + accelFomula , 0., 1.)
 
       gapInterP = interp(CS.out.vEgo, [19 * CV.KPH_TO_MS, 45*CV.KPH_TO_MS], [1, 0])
       self.comma_pedal =  (gapInterP * self.comma_pedal_original)  +  ((1.0-gapInterP) * self.comma_pedal_new)
