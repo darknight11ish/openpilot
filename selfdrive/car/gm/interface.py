@@ -70,14 +70,14 @@ class CarInterface(CarInterfaceBase):
     return ((SIGMOID_COEF_RIGHT if (desired_lateral_accel + ANGLE_OFFSET) < 0. else SIGMOID_COEF_LEFT) * sigmoid) + ANGLE_COEF2 * (desired_lateral_accel + ANGLE_OFFSET)
 
   def get_steer_feedforward_function(self):
-      #return self.get_steer_feedforward_bolt
+    # return self.get_steer_feedforward_bolt
     #else:
     return CarInterfaceBase.get_steer_feedforward_default
       
   def get_steer_feedforward_function_torque(self):
-     return self.get_steer_feedforward_bolt_torque
+    return self.get_steer_feedforward_bolt_torque
     #else:
-    #return CarInterfaceBase.get_steer_feedforward_torque_default 
+   # return CarInterfaceBase.get_steer_feedforward_torque_default 
 
     
   @staticmethod
@@ -111,7 +111,7 @@ class CarInterface(CarInterfaceBase):
 
     tire_stiffness_factor = 1.0
 
-    ret.minSteerSpeed = 5 * CV.MPH_TO_MS
+    ret.minSteerSpeed = 6 * CV.MPH_TO_MS
     ret.steerRateCost = 0.35 # def : 2.0
     ret.steerActuatorDelay = 0.2  # def: 0.2 Default delay, not measured yet
 
@@ -135,7 +135,7 @@ class CarInterface(CarInterfaceBase):
       ret.lateralTuning.indi.outerLoopGainBP = [10., 30.]
       ret.lateralTuning.indi.outerLoopGainV = [4.5, 7.0]
       ret.lateralTuning.indi.timeConstantBP = [10., 30.]
-      ret.lateralTuning.indi.timeConstantV = [1.8, 3.5]
+      ret.lateralTuning.indi.timeConstantV = [1.7, 3.4]
       ret.lateralTuning.indi.actuatorEffectivenessBP = [0.]
       ret.lateralTuning.indi.actuatorEffectivenessV = [2.]
       
@@ -169,7 +169,7 @@ class CarInterface(CarInterfaceBase):
       ret.steerActuatorDelay = 0.
       
       ret.lateralTuning.pid.kpBP, ret.lateralTuning.pid.kiBP = [[10., 41.0], [10., 41.0]]
-      ret.lateralTuning.pid.kpV, ret.lateralTuning.pid.kiV = [[0.18, 0.275], [0.01, 0.021]]
+      ret.lateralTuning.pid.kpV, ret.lateralTuning.pid.kiV = [[0.18, 0.275], [0.01, 0.02]]
       ret.lateralTuning.pid.kdBP = [0.]
       ret.lateralTuning.pid.kdV = [0.31]  
       ret.lateralTuning.pid.kf = 0.000045
@@ -182,7 +182,7 @@ class CarInterface(CarInterfaceBase):
       ret.lateralTuning.torque.useSteeringAngle = True
       ret.lateralTuning.torque.kp = 1.8 / max_lateral_accel
       ret.lateralTuning.torque.ki = 0.6 / max_lateral_accel
-      ret.lateralTuning.torque.kd = 4.0 / max_lateral_accel
+      ret.lateralTuning.torque.kd = 3.8 / max_lateral_accel
       ret.lateralTuning.torque.kf = 1.0 # use with custom torque ff
       ret.lateralTuning.torque.friction = 0.005
 
