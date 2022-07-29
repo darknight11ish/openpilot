@@ -135,9 +135,9 @@ class CarInterface(CarInterfaceBase):
       ret.lateralTuning.indi.outerLoopGainBP = [10., 30.]
       ret.lateralTuning.indi.outerLoopGainV = [4.5, 7.0]
       ret.lateralTuning.indi.timeConstantBP = [10., 30.]
-      ret.lateralTuning.indi.timeConstantV = [1.7, 3.5]
-      ret.lateralTuning.indi.actuatorEffectivenessBP = [0.]
-      ret.lateralTuning.indi.actuatorEffectivenessV = [2.]
+      ret.lateralTuning.indi.timeConstantV = [1.7, 3.4]
+      ret.lateralTuning.indi.actuatorEffectivenessBP = [10., 30.]
+      ret.lateralTuning.indi.actuatorEffectivenessV = [2.08, 2.02]
       
       
     elif lateral_control == 'LQR':
@@ -171,8 +171,8 @@ class CarInterface(CarInterfaceBase):
       ret.lateralTuning.pid.kpBP, ret.lateralTuning.pid.kiBP = [[10., 41.0], [10., 41.0]]
       ret.lateralTuning.pid.kpV, ret.lateralTuning.pid.kiV = [[0.18, 0.26], [0.01, 0.021]]
       ret.lateralTuning.pid.kdBP = [0.]
-      ret.lateralTuning.pid.kdV = [0.3]  
-      ret.lateralTuning.pid.kf = 0.00005
+      ret.lateralTuning.pid.kdV = [0.315]  
+      ret.lateralTuning.pid.kf = 0.000045
       
       
     else:
@@ -182,9 +182,9 @@ class CarInterface(CarInterfaceBase):
       ret.lateralTuning.torque.useSteeringAngle = True
       ret.lateralTuning.torque.kp = 1.8 / max_lateral_accel
       ret.lateralTuning.torque.ki = 0.6 / max_lateral_accel
-      ret.lateralTuning.torque.kd = 3.7 / max_lateral_accel
+      ret.lateralTuning.torque.kd = 3.8 / max_lateral_accel
       ret.lateralTuning.torque.kf = 1.0 # use with custom torque ff
-      ret.lateralTuning.torque.friction = 0.005
+      ret.lateralTuning.torque.friction = 0.006
 
     # TODO: get actual value, for now starting with reasonable value for
     # civic and scaling by mass and wheelbase
