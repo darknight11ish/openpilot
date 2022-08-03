@@ -75,9 +75,9 @@ class CarInterface(CarInterfaceBase):
     return CarInterfaceBase.get_steer_feedforward_default
       
   def get_steer_feedforward_function_torque(self):
-    return self.get_steer_feedforward_bolt_torque
+    #return self.get_steer_feedforward_bolt_torque
     #else:
-   # return CarInterfaceBase.get_steer_feedforward_torque_default 
+    return CarInterfaceBase.get_steer_feedforward_torque_default 
 
     
   @staticmethod
@@ -131,9 +131,9 @@ class CarInterface(CarInterfaceBase):
       ret.steerRateCost = 1.0
       
       ret.lateralTuning.indi.innerLoopGainBP = [10., 30.]
-      ret.lateralTuning.indi.innerLoopGainV = [5.24, 7.6]
+      ret.lateralTuning.indi.innerLoopGainV = [5.5, 8.0]
       ret.lateralTuning.indi.outerLoopGainBP = [10., 30.]
-      ret.lateralTuning.indi.outerLoopGainV = [4.5, 7.0]
+      ret.lateralTuning.indi.outerLoopGainV = [4.1, 6.65]
       ret.lateralTuning.indi.timeConstantBP = [10., 30.]
       ret.lateralTuning.indi.timeConstantV = [1.7, 3.4]
       ret.lateralTuning.indi.actuatorEffectivenessBP = [0.]
@@ -171,20 +171,22 @@ class CarInterface(CarInterfaceBase):
       ret.lateralTuning.pid.kpBP, ret.lateralTuning.pid.kiBP = [[10., 41.0], [10., 41.0]]
       ret.lateralTuning.pid.kpV, ret.lateralTuning.pid.kiV = [[0.18, 0.26], [0.01, 0.021]]
       ret.lateralTuning.pid.kdBP = [0.]
-      ret.lateralTuning.pid.kdV = [0.315]  
+      ret.lateralTuning.pid.kdV = [0.33]  
       ret.lateralTuning.pid.kf = 0.000045
       
       
     else:
+      ret.steerActuatorDelay = 0.2
       ret.lateralTuning.init('torque')
-      ret.steerActuatorDelay = 0.
-      max_lateral_accel = 3.0
       ret.lateralTuning.torque.useSteeringAngle = True
-      ret.lateralTuning.torque.kp = 1.8 / max_lateral_accel
-      ret.lateralTuning.torque.ki = 0.6 / max_lateral_accel
-      ret.lateralTuning.torque.kd = 3.8 / max_lateral_accel
-      ret.lateralTuning.torque.kf = 1.0 # use with custom torque ff
+      max_lat_accel = 2.8
+      ret.lateralTuning.torque.kp = 2.0 / max_lat_accel
+      ret.lateralTuning.torque.kf = 1.0 / max_lat_accel
+      ret.lateralTuning.torque.ki = 0.2 / max_lat_accel
       ret.lateralTuning.torque.friction = 0.006
+
+      ret.lateralTuning.torque.kd = 1.
+      ret.lateralTuning.torque.deadzone = 0.01 #DOES deadzone need to be 0.01?
 
     # TODO: get actual value, for now starting with reasonable value for
     # civic and scaling by mass and wheelbase
@@ -227,7 +229,7 @@ class CarInterface(CarInterfaceBase):
     ret.cruiseState.enabled = self.CS.main_on or self.CS.adaptive_Cruise
     ret.canValid = self.cp.can_valid and self.cp_loopback.can_valid
     ret.canTimeout = any(cp.bus_timeout for cp in self.can_parsers if cp is not None)
-    ret.steeringRateLimited = self.CC.steer_rate_limited if self.CC is not None else False
+    #ret.steeringRateLimited = self.CC.steer_rate_limited if self.CC is not None else False
 
     buttonEvents = []
 
