@@ -229,7 +229,7 @@ class CarInterface(CarInterfaceBase):
     ret.cruiseState.enabled = self.CS.main_on or self.CS.adaptive_Cruise
     ret.canValid = self.cp.can_valid and self.cp_loopback.can_valid
     ret.canTimeout = any(cp.bus_timeout for cp in self.can_parsers if cp is not None)
-    #ret.steeringRateLimited = self.CC.steer_rate_limited if self.CC is not None else False
+    ret.steeringRateLimited = self.CC.steer_rate_limited if self.CC is not None else False
 
     buttonEvents = []
 
