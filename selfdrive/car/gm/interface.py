@@ -131,11 +131,11 @@ class CarInterface(CarInterfaceBase):
       ret.steerRateCost = 1.0
       
       ret.lateralTuning.indi.innerLoopGainBP = [10., 30.]
-      ret.lateralTuning.indi.innerLoopGainV = [5., 7.3]
+      ret.lateralTuning.indi.innerLoopGainV = [5., 7.3] #may need to decrease innerloop 5 to 4.5
       ret.lateralTuning.indi.outerLoopGainBP = [10., 30.]
       ret.lateralTuning.indi.outerLoopGainV = [4.1, 6.65]
       ret.lateralTuning.indi.timeConstantBP = [10., 30.]
-      ret.lateralTuning.indi.timeConstantV = [1.7, 3.55]
+      ret.lateralTuning.indi.timeConstantV = [1.7, 3.72]
       ret.lateralTuning.indi.actuatorEffectivenessBP = [0.]
       ret.lateralTuning.indi.actuatorEffectivenessV = [2.]
       
@@ -171,7 +171,7 @@ class CarInterface(CarInterfaceBase):
       ret.lateralTuning.pid.kpBP, ret.lateralTuning.pid.kiBP = [[10., 41.0], [10., 41.0]]
       ret.lateralTuning.pid.kpV, ret.lateralTuning.pid.kiV = [[0.18, 0.273], [0.01, 0.021]]
       ret.lateralTuning.pid.kdBP = [0.]
-      ret.lateralTuning.pid.kdV = [0.33]  
+      ret.lateralTuning.pid.kdV = [0.347]  
       ret.lateralTuning.pid.kf = 0.000045
       
       
@@ -179,7 +179,7 @@ class CarInterface(CarInterfaceBase):
       ret.steerActuatorDelay = 0.2
       ret.lateralTuning.init('torque')
       ret.lateralTuning.torque.useSteeringAngle = True
-      max_lat_accel = 2.8
+      max_lat_accel = 3.0
       ret.lateralTuning.torque.kp = 2.0 / max_lat_accel
       ret.lateralTuning.torque.kf = 1.0 / max_lat_accel
       ret.lateralTuning.torque.ki = 0.19 / max_lat_accel
