@@ -49,35 +49,39 @@ class CarInterface(CarInterfaceBase):
   
   @staticmethod
   def get_steer_feedforward_bolt(desired_angle, v_ego):
-    ANGLE = 0.06370624896135679
-    ANGLE_OFFSET = 0.#32536345911579184
-    SIGMOID_SPEED = 0.06479105208670367
-    SIGMOID = 0.34485246691603205
-    SPEED = -0.0010645479469461995
-    return get_steer_feedforward_sigmoid(desired_angle, v_ego, ANGLE, ANGLE_OFFSET, SIGMOID_SPEED, SIGMOID, SPEED)
+    ANGLE_COEF = 0.90197014
+    ANGLE_COEF2 = 0.35867166
+    ANGLE_OFFSET = 0.#69029483
+    SPEED_OFFSET = 10.93210374
+    SIGMOID_COEF_RIGHT = 0.16006602
+    SIGMOID_COEF_LEFT = 0.13780659
+    SPEED_COEF = 0.07925358
+    x = ANGLE_COEF * (angle + ANGLE_OFFSET)
+    sigmoid = x / (1. + fabs(x))
+    return ((SIGMOID_COEF_RIGHT if (angle + ANGLE_OFFSET) > 0. else SIGMOID_COEF_LEFT) * sigmoid) * ((speed + SPEED_OFFSET) * SPEED_COEF) * ((fabs(angle + ANGLE_OFFSET) ** fabs(ANGLE_COEF2)))
 
   @staticmethod
   def get_steer_feedforward_bolt_torque(desired_lateral_accel, speed):
-    ANGLE_COEF = 0.18708832
-    ANGLE_COEF2 = 0.28818528
-    ANGLE_OFFSET = 0.#21370785
-    SPEED_OFFSET = 20.00000000
-    SIGMOID_COEF_RIGHT = 0.36997215
-    SIGMOID_COEF_LEFT = 0.43181054
-    SPEED_COEF = 0.34143006
+    ANGLE_COEF = 89.20767214
+    ANGLE_COEF2 = 0.20369467
+    ANGLE_OFFSET = 0.#17140063
+    SPEED_OFFSET = 30.08002220
+    SIGMOID_COEF_RIGHT = 0.52104735
+    SIGMOID_COEF_LEFT = 0.54360152
+    SPEED_COEF = 2.00000000
     x = ANGLE_COEF * (desired_lateral_accel + ANGLE_OFFSET) * (40.23 / (max(0.05,speed + SPEED_OFFSET))**SPEED_COEF)
     sigmoid = erf(x)
     return ((SIGMOID_COEF_RIGHT if (desired_lateral_accel + ANGLE_OFFSET) < 0. else SIGMOID_COEF_LEFT) * sigmoid) + ANGLE_COEF2 * (desired_lateral_accel + ANGLE_OFFSET)
 
   def get_steer_feedforward_function(self):
-    # return self.get_steer_feedforward_bolt
+    return self.get_steer_feedforward_bolt
     #else:
-    return CarInterfaceBase.get_steer_feedforward_default
+    #return CarInterfaceBase.get_steer_feedforward_default
       
   def get_steer_feedforward_function_torque(self):
-    #return self.get_steer_feedforward_bolt_torque
+    return self.get_steer_feedforward_bolt_torque
     #else:
-    return CarInterfaceBase.get_steer_feedforward_torque_default 
+    #return CarInterfaceBase.get_steer_feedforward_torque_default 
 
     
   @staticmethod
@@ -165,28 +169,27 @@ class CarInterface(CarInterfaceBase):
       ret.centerToFront = 2.0828 #ret.wheelbase * 0.4 # wild guess
       tire_stiffness_factor = 1.0
       
-      ret.steerRateCost = 0.5
       ret.steerActuatorDelay = 0.
+      ret.steerRateCost = 0.5
+ 
       
       ret.lateralTuning.pid.kpBP, ret.lateralTuning.pid.kiBP = [[10., 41.0], [10., 41.0]]
-      ret.lateralTuning.pid.kpV, ret.lateralTuning.pid.kiV = [[0.18, 0.273], [0.01, 0.021]]
+      ret.lateralTuning.pid.kpV, ret.lateralTuning.pid.kiV = [[0.14, 0.24], [0.01, 0.021]]
       ret.lateralTuning.pid.kdBP = [0.]
-      ret.lateralTuning.pid.kdV = [0.347]  
-      ret.lateralTuning.pid.kf = 0.000045
+      ret.lateralTuning.pid.kdV = [0.5]
+      ret.lateralTuning.pid.kf = 1. # for get_steer_feedforward_bolt()
       
       
     else:
-      ret.steerActuatorDelay = 0.2
+      max_lateral_accel = 3.0
       ret.lateralTuning.init('torque')
       ret.lateralTuning.torque.useSteeringAngle = True
-      max_lat_accel = 3.0
-      ret.lateralTuning.torque.kp = 2.0 / max_lat_accel
-      ret.lateralTuning.torque.kf = 1.0 / max_lat_accel
-      ret.lateralTuning.torque.ki = 0.19 / max_lat_accel
-      ret.lateralTuning.torque.friction = 0.006
-
-      ret.lateralTuning.torque.kd = 1.
-      ret.lateralTuning.torque.deadzone = 0.01 #DOES deadzone need to be 0.01?
+      ret.lateralTuning.torque.kp = 1.8 / max_lateral_accel
+      ret.lateralTuning.torque.ki = 0.6 / max_lateral_accel
+      #ret.lateralTuning.torque.kd = 4.0 / max_lateral_accel #is present in c3-ff but not in develop-bolt-twilsonco which is updated FF values 
+      ret.lateralTuning.torque.kf = 1.0 # use with custom torque ff
+      ret.lateralTuning.torque.friction = 0.005
+      #ret.lateralTuning.torque.deadzone = 0.01
 
     # TODO: get actual value, for now starting with reasonable value for
     # civic and scaling by mass and wheelbase
