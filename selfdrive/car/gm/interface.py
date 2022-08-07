@@ -186,10 +186,10 @@ class CarInterface(CarInterfaceBase):
       ret.lateralTuning.torque.useSteeringAngle = True
       ret.lateralTuning.torque.kp = 1.8 / max_lateral_accel
       ret.lateralTuning.torque.ki = 0.6 / max_lateral_accel
-      #ret.lateralTuning.torque.kd = 4.0 / max_lateral_accel #is present in c3-ff but not in develop-bolt-twilsonco which is updated FF values 
+      ret.lateralTuning.torque.kd = 1.0 / max_lateral_accel #is present in c3-ff but not in develop-bolt-twilsonco which is updated FF values 
       ret.lateralTuning.torque.kf = 1.0 # use with custom torque ff
       ret.lateralTuning.torque.friction = 0.005
-      #ret.lateralTuning.torque.deadzone = 0.01
+      ret.lateralTuning.torque.deadzone = 0.0
 
     # TODO: get actual value, for now starting with reasonable value for
     # civic and scaling by mass and wheelbase
