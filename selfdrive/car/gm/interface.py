@@ -135,7 +135,7 @@ class CarInterface(CarInterfaceBase):
       ret.lateralTuning.indi.outerLoopGainBP = [10., 30.]
       ret.lateralTuning.indi.outerLoopGainV = [4.1, 6.65]
       ret.lateralTuning.indi.timeConstantBP = [10., 30.]
-      ret.lateralTuning.indi.timeConstantV = [1.7, 3.91]
+      ret.lateralTuning.indi.timeConstantV = [1.7, 3.72]
       ret.lateralTuning.indi.actuatorEffectivenessBP = [0.]
       ret.lateralTuning.indi.actuatorEffectivenessV = [2.]
       
@@ -169,9 +169,9 @@ class CarInterface(CarInterfaceBase):
       ret.steerActuatorDelay = 0.
       
       ret.lateralTuning.pid.kpBP, ret.lateralTuning.pid.kiBP = [[10., 41.0], [10., 41.0]]
-      ret.lateralTuning.pid.kpV, ret.lateralTuning.pid.kiV = [[0.18, 0.26], [0.01, 0.02]]
+      ret.lateralTuning.pid.kpV, ret.lateralTuning.pid.kiV = [[0.18, 0.273], [0.01, 0.02]]
       ret.lateralTuning.pid.kdBP = [0.]
-      ret.lateralTuning.pid.kdV = [0.2] 
+      ret.lateralTuning.pid.kdV = [0.22] 
       ret.lateralTuning.pid.kf = 0.000045
       
       
@@ -186,7 +186,7 @@ class CarInterface(CarInterfaceBase):
       ret.lateralTuning.torque.friction = 0.006
 
       ret.lateralTuning.torque.kd = 1.06
-      ret.lateralTuning.torque.deadzone = 0.01 #DOES deadzone need to be 0.01?
+      ret.lateralTuning.torque.deadzone = 0. #DOES deadzone need to be 0.01?
 
     # TODO: get actual value, for now starting with reasonable value for
     # civic and scaling by mass and wheelbase
