@@ -131,11 +131,11 @@ class CarInterface(CarInterfaceBase):
       ret.steerRateCost = 1.0
       
       ret.lateralTuning.indi.innerLoopGainBP = [10., 30.]
-      ret.lateralTuning.indi.innerLoopGainV = [5., 7.6] 
+      ret.lateralTuning.indi.innerLoopGainV = [4.75, 7.2] 
       ret.lateralTuning.indi.outerLoopGainBP = [10., 30.]
-      ret.lateralTuning.indi.outerLoopGainV = [4.1, 6.65]
+      ret.lateralTuning.indi.outerLoopGainV = [4.1, 6.75]
       ret.lateralTuning.indi.timeConstantBP = [10., 30.]
-      ret.lateralTuning.indi.timeConstantV = [1.7, 3.72]
+      ret.lateralTuning.indi.timeConstantV = [1.7, 3.7]
       ret.lateralTuning.indi.actuatorEffectivenessBP = [0.]
       ret.lateralTuning.indi.actuatorEffectivenessV = [2.]
       
@@ -171,7 +171,7 @@ class CarInterface(CarInterfaceBase):
       ret.lateralTuning.pid.kpBP, ret.lateralTuning.pid.kiBP = [[10., 41.0], [10., 41.0]]
       ret.lateralTuning.pid.kpV, ret.lateralTuning.pid.kiV = [[0.18, 0.273], [0.01, 0.021]]
       ret.lateralTuning.pid.kdBP = [0.]
-      ret.lateralTuning.pid.kdV = [0.235] 
+      ret.lateralTuning.pid.kdV = [0.25] 
       ret.lateralTuning.pid.kf = 0.00005
       
       
@@ -179,14 +179,14 @@ class CarInterface(CarInterfaceBase):
       ret.steerActuatorDelay = 0.2
       ret.lateralTuning.init('torque')
       ret.lateralTuning.torque.useSteeringAngle = True
-      max_lat_accel = 2.8
+      max_lat_accel = 2.6
       ret.lateralTuning.torque.kp = 2.0 / max_lat_accel
       ret.lateralTuning.torque.kf = 1.0 / max_lat_accel
-      ret.lateralTuning.torque.ki = 0.2 / max_lat_accel
+      ret.lateralTuning.torque.ki = 0.19 / max_lat_accel
       ret.lateralTuning.torque.friction = 0.008
 
-      ret.lateralTuning.torque.kd = 1.16
-      ret.lateralTuning.torque.deadzone = 0. #DOES deadzone need to be 0.01?
+      ret.lateralTuning.torque.kd = 1.
+      ret.lateralTuning.torque.deadzone = 0.01 #DOES deadzone need to be 0.01?
 
     # TODO: get actual value, for now starting with reasonable value for
     # civic and scaling by mass and wheelbase
