@@ -13,16 +13,16 @@ ButtonType = car.CarState.ButtonEvent.Type
 EventName = car.CarEvent.EventName
 
 # meant for torque fits
-def get_steer_feedforward_erf(angle, speed, ANGLE_COEF, ANGLE_OFFSET, SPEED_OFFSET, SPEED_POWER, SIGMOID_COEF, SPEED_COEF):
-  x = ANGLE_COEF * (angle + ANGLE_OFFSET)
-  sigmoid = erf(x)
-  return (SIGMOID_COEF * sigmoid) / (max(speed - SPEED_OFFSET, 0.1) * SPEED_COEF)**SPEED_POWER
+#def get_steer_feedforward_erf(angle, speed, ANGLE_COEF, ANGLE_OFFSET, SPEED_OFFSET, SPEED_POWER, SIGMOID_COEF, SPEED_COEF):
+#  x = ANGLE_COEF * (angle + ANGLE_OFFSET)
+#  sigmoid = erf(x)
+#  return (SIGMOID_COEF * sigmoid) / (max(speed - SPEED_OFFSET, 0.1) * SPEED_COEF)**SPEED_POWER
 
 # meant for traditional ff fits
-def get_steer_feedforward_sigmoid(desired_angle, v_ego, ANGLE, ANGLE_OFFSET, SIGMOID_SPEED, SIGMOID, SPEED):
-  x = ANGLE * (desired_angle + ANGLE_OFFSET)
-  sigmoid = x / (1 + fabs(x))
-  return (SIGMOID_SPEED * sigmoid * v_ego) + (SIGMOID * sigmoid) + (SPEED * v_ego)
+#def get_steer_feedforward_sigmoid(desired_angle, v_ego, ANGLE, ANGLE_OFFSET, SIGMOID_SPEED, SIGMOID, SPEED):
+#  x = ANGLE * (desired_angle + ANGLE_OFFSET)
+#  sigmoid = x / (1 + fabs(x))
+#  return (SIGMOID_SPEED * sigmoid * v_ego) + (SIGMOID * sigmoid) + (SPEED * v_ego)
 
 
 class CarInterface(CarInterfaceBase):
@@ -47,37 +47,37 @@ class CarInterface(CarInterfaceBase):
 
   # Determined by iteratively plotting and minimizing error for f(angle, speed) = steer.
   
-  @staticmethod
-  def get_steer_feedforward_bolt(desired_angle, v_ego):
-    ANGLE = 0.06370624896135679
-    ANGLE_OFFSET = 0.#32536345911579184
-    SIGMOID_SPEED = 0.06479105208670367
-    SIGMOID = 0.34485246691603205
-    SPEED = -0.0010645479469461995
-    return get_steer_feedforward_sigmoid(desired_angle, v_ego, ANGLE, ANGLE_OFFSET, SIGMOID_SPEED, SIGMOID, SPEED)
+  #@staticmethod
+  #def get_steer_feedforward_bolt(desired_angle, v_ego):
+  #  ANGLE = 0.06370624896135679
+  #  ANGLE_OFFSET = 0.#32536345911579184
+  #  SIGMOID_SPEED = 0.06479105208670367
+  #  SIGMOID = 0.34485246691603205
+  #  SPEED = -0.0010645479469461995
+  #  return get_steer_feedforward_sigmoid(desired_angle, v_ego, ANGLE, ANGLE_OFFSET, SIGMOID_SPEED, SIGMOID, SPEED)
 
-  @staticmethod
-  def get_steer_feedforward_bolt_torque(desired_lateral_accel, speed):
-    ANGLE_COEF = 0.18708832
-    ANGLE_COEF2 = 0.28818528
-    ANGLE_OFFSET = 0.#21370785
-    SPEED_OFFSET = 20.00000000
-    SIGMOID_COEF_RIGHT = 0.36997215
-    SIGMOID_COEF_LEFT = 0.43181054
-    SPEED_COEF = 0.34143006
-    x = ANGLE_COEF * (desired_lateral_accel + ANGLE_OFFSET) * (40.23 / (max(0.05,speed + SPEED_OFFSET))**SPEED_COEF)
-    sigmoid = erf(x)
-    return ((SIGMOID_COEF_RIGHT if (desired_lateral_accel + ANGLE_OFFSET) < 0. else SIGMOID_COEF_LEFT) * sigmoid) + ANGLE_COEF2 * (desired_lateral_accel + ANGLE_OFFSET)
+  #@staticmethod
+  #def get_steer_feedforward_bolt_torque(desired_lateral_accel, speed):
+   # ANGLE_COEF = 0.18708832
+   # ANGLE_COEF2 = 0.28818528
+   # ANGLE_OFFSET = 0.#21370785
+   # SPEED_OFFSET = 20.00000000
+   # SIGMOID_COEF_RIGHT = 0.36997215
+   # SIGMOID_COEF_LEFT = 0.43181054
+   # SPEED_COEF = 0.34143006
+   # x = ANGLE_COEF * (desired_lateral_accel + ANGLE_OFFSET) * (40.23 / (max(0.05,speed + SPEED_OFFSET))**SPEED_COEF)
+   # sigmoid = erf(x)
+   # return ((SIGMOID_COEF_RIGHT if (desired_lateral_accel + ANGLE_OFFSET) < 0. else SIGMOID_COEF_LEFT) * sigmoid) + ANGLE_COEF2 * (desired_lateral_accel + ANGLE_OFFSET)
 
   def get_steer_feedforward_function(self):
     # return self.get_steer_feedforward_bolt
     #else:
     return CarInterfaceBase.get_steer_feedforward_default
       
-  def get_steer_feedforward_function_torque(self):
+  #def get_steer_feedforward_function_torque(self): #DO I NEED THIS FOR TORQUE TO WORK AFTER REMOVING FF
     #return self.get_steer_feedforward_bolt_torque
     #else:
-    return CarInterfaceBase.get_steer_feedforward_torque_default 
+    #return CarInterfaceBase.get_steer_feedforward_torque_default 
 
     
   @staticmethod
