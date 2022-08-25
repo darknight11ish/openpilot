@@ -133,7 +133,7 @@ class CarInterface(CarInterfaceBase):
       ret.lateralTuning.indi.innerLoopGainBP = [10., 30.]
       ret.lateralTuning.indi.innerLoopGainV = [5., 7.6] 
       ret.lateralTuning.indi.outerLoopGainBP = [10., 30.]
-      ret.lateralTuning.indi.outerLoopGainV = [4.1, 7.0]
+      ret.lateralTuning.indi.outerLoopGainV = [4.1, 6.32]
       ret.lateralTuning.indi.timeConstantBP = [10., 30.]
       ret.lateralTuning.indi.timeConstantV = [1.7, 3.72]
       ret.lateralTuning.indi.actuatorEffectivenessBP = [0.]
@@ -171,7 +171,7 @@ class CarInterface(CarInterfaceBase):
       ret.lateralTuning.pid.kpBP, ret.lateralTuning.pid.kiBP = [[10., 41.0], [10., 41.0]]
       ret.lateralTuning.pid.kpV, ret.lateralTuning.pid.kiV = [[0.18, 0.273], [0.01, 0.021]]
       ret.lateralTuning.pid.kdBP = [0.]
-      ret.lateralTuning.pid.kdV = [0.25] 
+      ret.lateralTuning.pid.kdV = [0.3] 
       ret.lateralTuning.pid.kf = 0.00005
       
       
@@ -208,7 +208,7 @@ class CarInterface(CarInterfaceBase):
     ret.longitudinalActuatorDelayLowerBound = 0.15
     ret.longitudinalActuatorDelayUpperBound = 0.15
    
-    ret.stopAccel = 5.0
+    ret.stopAccel = 10.
     ret.stoppingDecelRate = 4.1 #0.17 in my fork, large change?
     ret.vEgoStopping = 0.5
     ret.vEgoStarting = 0.5
