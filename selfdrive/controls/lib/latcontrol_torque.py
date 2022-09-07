@@ -96,7 +96,7 @@ class LatControlTorque(LatControl):
       output_torque = self.pid.update(error_deadzone, error_rate,
                                       override=CS.steeringPressed, feedforward=ff,
                                       speed=CS.vEgo,
-                                      freeze_integrator=CS.steeringRateLimited)
+                                      freeze_integrator=freeze_integrator)
 
       pid_log.active = True
       pid_log.p = self.pid.p
