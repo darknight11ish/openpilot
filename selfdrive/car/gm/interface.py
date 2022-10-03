@@ -131,7 +131,7 @@ class CarInterface(CarInterfaceBase):
       ret.steerRateCost = 1.0
       
       ret.lateralTuning.indi.innerLoopGainBP = [10., 30.]
-      ret.lateralTuning.indi.innerLoopGainV = [5., 6.5] 
+      ret.lateralTuning.indi.innerLoopGainV = [5., 6.2] 
       ret.lateralTuning.indi.outerLoopGainBP = [10., 30.]
       ret.lateralTuning.indi.outerLoopGainV = [4.1, 6.65]
       ret.lateralTuning.indi.timeConstantBP = [10., 30.]
