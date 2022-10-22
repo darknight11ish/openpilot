@@ -86,36 +86,34 @@ class CarInterface(CarInterfaceBase):
 
     tire_stiffness_factor = 0.5
 
-    ret.minSteerSpeed = 11 * CV.KPH_TO_MS
-    ret.steerRateCost = 0.35 # def : 2.0
-    ret.steerActuatorDelay = 0.2  # def: 0.2 Default delay, not measured yet
+    ret.minSteerSpeed = 6 * CV.MPH_TO_MS
+    ret.steerRateCost = 0.5 
+    ret.steerActuatorDelay = 0. 
 
     ret.minEnableSpeed = -1
     ret.mass = 1625. + STD_CARGO_KG
     ret.wheelbase = 2.60096
-    ret.steerRatio = 16.85
+    ret.steerRatio = 16.8
     ret.steerRatioRear = 0.
     ret.centerToFront = ret.wheelbase * 0.49 # wild guess
     ret.disableLateralLiveTuning = True
 
     lateral_control = Params().get("LateralControl", encoding='utf-8')
     if lateral_control == 'INDI':
-      ret.lateralTuning.init('indi')
-      ret.lateralTuning.indi.innerLoopGainBP = [0.]
-      ret.lateralTuning.indi.innerLoopGainV = [3.3]
-      ret.lateralTuning.indi.outerLoopGainBP = [0.]
-      ret.lateralTuning.indi.outerLoopGainV = [2.8]
-      ret.lateralTuning.indi.timeConstantBP = [0.]
-      ret.lateralTuning.indi.timeConstantV = [1.4]
+      ret.lateralTuning.indi.innerLoopGainBP = [10., 30.]
+      ret.lateralTuning.indi.innerLoopGainV = [5., 6.5] 
+      ret.lateralTuning.indi.outerLoopGainBP = [10., 30.]
+      ret.lateralTuning.indi.outerLoopGainV = [4.1, 7.15]
+      ret.lateralTuning.indi.timeConstantBP = [10., 30.]
+      ret.lateralTuning.indi.timeConstantV = [1.7, 3.7]
       ret.lateralTuning.indi.actuatorEffectivenessBP = [0.]
-      ret.lateralTuning.indi.actuatorEffectivenessV = [1.8]
+      ret.lateralTuning.indi.actuatorEffectivenessV = [2.]
+      
     elif lateral_control == 'LQR':
       ret.lateralTuning.init('lqr')
-
       ret.lateralTuning.lqr.scale = 1950.0
       ret.lateralTuning.lqr.ki = 0.032
       ret.lateralTuning.lqr.dcGain = 0.002237852961363602
-
       ret.lateralTuning.lqr.a = [0., 1., -0.22619643, 1.21822268]
       ret.lateralTuning.lqr.b = [-1.92006585e-04, 3.95603032e-05]
       ret.lateralTuning.lqr.c = [1., 0.]
@@ -125,14 +123,15 @@ class CarInterface(CarInterfaceBase):
     else:
       ret.lateralTuning.init('torque')
       ret.lateralTuning.torque.useSteeringAngle = True
-      max_lat_accel = 2.35
+      max_lat_accel = 2.55
       ret.lateralTuning.torque.kp = 2.0 / max_lat_accel
       ret.lateralTuning.torque.kf = 1.0 / max_lat_accel
-      ret.lateralTuning.torque.ki = 0.2 / max_lat_accel
-      ret.lateralTuning.torque.friction = 0.01
+      ret.lateralTuning.torque.ki = 0.18 / max_lat_accel
+      ret.lateralTuning.torque.friction = 0.008
+
 
       ret.lateralTuning.torque.kd = 1.0
-      ret.lateralTuning.torque.deadzone = 0.01
+      ret.lateralTuning.torque.deadzone = 0.0
 
 
     # TODO: get actual value, for now starting with reasonable value for
@@ -145,26 +144,21 @@ class CarInterface(CarInterfaceBase):
                                                                          tire_stiffness_factor=tire_stiffness_factor)
 
     # longitudinal
-    ret.longitudinalTuning.kpBP = [0., 25.*CV.KPH_TO_MS, 100.*CV.KPH_TO_MS]
-    ret.longitudinalTuning.kpV = [1.35, 1.20, 0.65] # when 40 => 1.09, y = 1.38333 - 0.00733333 x,  till 1.20~0.65,
-    # ret.longitudinalTuning.kpV = [1.35, 1.20, 1.125, 0.65]   #but slightly cover up to 1.125
-  
-    ret.longitudinalTuning.kiBP = [0.,25. * CV.KPH_TO_MS , 130. * CV.KPH_TO_MS]
-    ret.longitudinalTuning.kiV = [0.18,0.13, 0.10]
+    ret.longitudinalTuning.kpBP = [0., 35.]
+    ret.longitudinalTuning.kpV = [0.12, 0.35] 
+    ret.longitudinalTuning.kiBP = [0., 35.] 
+    ret.longitudinalTuning.kiV = [0.22, 0.34]
     
-    ret.longitudinalTuning.deadzoneBP = [0., 30.*CV.KPH_TO_MS]
-    ret.longitudinalTuning.deadzoneV = [0., 0.10]
-    ret.longitudinalActuatorDelayLowerBound = 0.13
+    ret.longitudinalTuning.deadzoneBP = [0.]
+    ret.longitudinalTuning.deadzoneV = [0.]
+    ret.longitudinalActuatorDelayLowerBound = 0.15
     ret.longitudinalActuatorDelayUpperBound = 0.15
-    
-    # ret.startAccel = -0.8 #### REMOVED
-    ret.stopAccel = -2.0
-    # ret.startingAccelRate = 5.0 #### REMOVED
-    ret.stoppingDecelRate = 4.0
+   
+    ret.stopAccel = 15.
+    ret.stoppingDecelRate = 4.1 #0.17 in my fork, large change?
     ret.vEgoStopping = 0.5
     ret.vEgoStarting = 0.5
     ret.stoppingControl = True
-    
     ret.steerLimitTimer = 0.4
     ret.radarTimeStep = 0.0667  # GM radar runs at 15Hz instead of standard 20Hz
 
