@@ -186,7 +186,7 @@ class CarInterface(CarInterfaceBase):
       ret.stopAccel = 5.0 # Required acceleraton to keep vehicle stationary
       ret.vEgoStopping = 0.5  # Speed at which the car goes into stopping state, when car starts requesting stopping accel
       ret.vEgoStarting = 0.5  # Speed at which the car goes into starting state, when car starts requesting starting accel,
-      # vEgoStarting needs to be > or == vEgoStopping to avoid state transition oscillation
+      # vEgoStarting needs to be > or == vEgoStopping to avoid state transition oscillation 
       ret.stoppingControl = True
       
     elif candidate == CAR.EQUINOX_NR:
