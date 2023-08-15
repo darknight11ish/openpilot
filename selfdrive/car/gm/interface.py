@@ -112,7 +112,7 @@ class CarInterface(CarInterfaceBase):
     tire_stiffness_factor = 1.0
 
     ret.minSteerSpeed = 5 * CV.MPH_TO_MS
-    ret.steerRateCost = 0.35 # def : 2.0
+    ret.steerRateCost = 0.4 # def : 2.0
     ret.steerActuatorDelay = 0.2  # def: 0.2 Default delay, not measured yet
 
     ret.minEnableSpeed = -1
@@ -169,7 +169,7 @@ class CarInterface(CarInterfaceBase):
       ret.steerActuatorDelay = 0.
       
       ret.lateralTuning.pid.kpBP, ret.lateralTuning.pid.kiBP = [[10., 41.0], [10., 41.0]]
-      ret.lateralTuning.pid.kpV, ret.lateralTuning.pid.kiV = [[0.17, 0.295], [0.01, 0.02]]
+      ret.lateralTuning.pid.kpV, ret.lateralTuning.pid.kiV = [[0.16, 0.26], [0.01, 0.021]]
       ret.lateralTuning.pid.kdBP = [0.]
       ret.lateralTuning.pid.kdV = [0.3] 
       ret.lateralTuning.pid.kf = 0.00005
